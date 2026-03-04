@@ -2,17 +2,19 @@
 
 ## Overview
 
-A web application that estimates toll ("TAG") fees for a given route through Santiago, Chile's urban highway system. It uses the **Google Maps Routes API** for route calculation and a **local toll database** for fee estimation, since Google's Routes API does not natively support Chilean toll passes.
+A web application that estimates toll ("TAG") fees for a given route through Santiago, Chile's urban highway system. Uses **100% free APIs** — OSRM for routing and Leaflet/OpenStreetMap for maps — with a local toll portal database for fee calculation.
+
+> **Cost: $0.** No API keys required for the MVP. Accuracy is approximate — good enough for estimation.
 
 ## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│                   Frontend (React)                   │
+│              Frontend (Vanilla HTML/JS)               │
 │  ┌───────────┐  ┌──────────────┐  ┌──────────────┐  │
 │  │  Map View  │  │ Route Input  │  │ Toll Summary │  │
-│  │ (Google    │  │ (Origin /    │  │ (Breakdown   │  │
-│  │  Maps JS)  │  │  Destination)│  │  by highway) │  │
+│  │ (Leaflet + │  │ (Origin /    │  │ (Breakdown   │  │
+│  │  OSM tiles)│  │  Destination)│  │  by highway) │  │
 │  └───────────┘  └──────────────┘  └──────────────┘  │
 └────────────────────────┬────────────────────────────┘
                          │ REST API
@@ -20,26 +22,41 @@ A web application that estimates toll ("TAG") fees for a given route through San
 │                Backend (Python / FastAPI)             │
 │  ┌──────────────┐  ┌──────────────┐  ┌───────────┐  │
 │  │ Route Service│  │ Toll Engine  │  │ Data Layer│  │
-│  │ (Google Maps │  │ (Portal      │  │ (Toll DB) │  │
-│  │  Routes API) │  │  Intersection│  │           │  │
+│  │ (OSRM free  │  │ (Portal      │  │ (Toll DB  │  │
+│  │  routing API)│  │  Intersection│  │  as JSON) │  │
 │  │              │  │  + Pricing)  │  │           │  │
 │  └──────────────┘  └──────────────┘  └───────────┘  │
 └─────────────────────────────────────────────────────┘
 ```
 
-## Key Design Decisions
+## Free API Stack
 
-### Why NOT rely on Google for toll pricing
-- Google Maps Routes API **does not have Chilean TollPass entries** in its enum
-- Even with `extraComputations: ["TOLLS"]`, it may report toll presence but not accurate CLP prices
-- Santiago's toll system has complex portal-based pricing with time-of-day bands that we must model ourselves
+| Need | Free Solution | Notes |
+|------|--------------|-------|
+| **Routing** | [OSRM Demo Server](http://router.project-osrm.org) | Free, no key needed. Public demo server for dev/prototype use |
+| **Geocoding** | [Nominatim](https://nominatim.openstreetmap.org) | Free, no key. 1 req/sec rate limit |
+| **Map tiles** | [OpenStreetMap](https://tile.openstreetmap.org) via Leaflet | Free, open source |
+| **Map UI** | [Leaflet.js](https://leafletjs.com) | Free, open source, lightweight |
+| **Toll pricing** | Local JSON database | Hand-curated from official PDFs, $0 |
 
-### Approach: Route + Portal Intersection
-1. Get route polyline from Google Maps Routes API
-2. Decode polyline into lat/lng points
-3. Check which toll portals (gantries) the route passes through using geofencing
-4. Look up the applicable rate for each portal based on: highway, direction, time of day, vehicle category
-5. Sum up the total estimated toll
+### Why this works
+- OSRM returns route geometry as a polyline — same as Google would
+- Nominatim handles address → lat/lng conversion (Santiago addresses)
+- Leaflet + OSM tiles are completely free with no API key
+- The toll calculation is 100% local (our JSON data + geofencing logic)
+
+### Trade-offs accepted
+- OSRM demo server: not for production (rate limited, no SLA) — can self-host later
+- Nominatim: 1 request/second, Chilean address coverage is decent but not perfect
+- No real-time traffic data (affects time-of-day band estimation only slightly)
+
+## Approach: Route + Portal Intersection
+1. Geocode origin/destination addresses via **Nominatim**
+2. Get route polyline from **OSRM** `route` endpoint
+3. Decode polyline into lat/lng points
+4. Check which toll portals (gantries) the route passes through using **geofencing**
+5. Look up the applicable rate for each portal based on: highway, direction, time of day, vehicle category
+6. Sum up the total estimated toll
 
 ---
 
@@ -48,8 +65,8 @@ A web application that estimates toll ("TAG") fees for a given route through San
 ### 1.1 Project scaffolding
 - Python backend with FastAPI
 - `pyproject.toml` with dependencies: `fastapi`, `uvicorn`, `httpx`, `polyline`, `pydantic`
-- Frontend: Simple HTML/JS with Google Maps JavaScript API (no framework needed initially)
-- Environment config for Google Maps API key
+- Frontend: Simple HTML/JS with Leaflet.js + OpenStreetMap (no API key needed)
+- No environment config needed for MVP (all APIs are keyless)
 
 ### 1.2 Toll data model (`toll_data/`)
 Define JSON data files for each highway with portal information:
@@ -168,11 +185,11 @@ Total trip cost = SUM(portal charges for all portals crossed)
 
 ## Phase 2: Backend Core
 
-### 2.1 Google Maps Route Service (`src/route_service.py`)
-- Call Google Maps Routes API `computeRoutes` endpoint
-- Request polyline in response
+### 2.1 Route Service (`src/route_service.py`)
+- **Geocoding**: Nominatim API (`https://nominatim.openstreetmap.org/search`) — address to lat/lng
+- **Routing**: OSRM API (`http://router.project-osrm.org/route/v1/driving/{coords}`) — returns polyline geometry
 - Decode polyline to list of (lat, lng) coordinates
-- Also request `TOLLS` in `extraComputations` for supplementary info
+- Both APIs are free, no key needed, just respect rate limits (1 req/sec for Nominatim)
 
 ### 2.2 Portal Geofencing (`src/toll_engine.py`)
 - For each known portal, define a detection zone (circle ~50m radius around portal coordinates)
@@ -222,13 +239,13 @@ Response:
 ## Phase 3: Frontend
 
 ### 3.1 Map Interface
-- Google Maps JavaScript API with autocomplete for origin/destination
-- Draw route on map after estimation
-- Mark portal locations with custom markers
-- Show toll portals crossed highlighted in a different color
+- **Leaflet.js** with OpenStreetMap tiles (100% free, no API key)
+- Draw route polyline on map after estimation
+- Mark portal locations with custom markers (red = crossed, grey = not crossed)
+- Click-on-map to set origin/destination as alternative to text input
 
 ### 3.2 Controls Panel
-- Origin / Destination inputs with Places Autocomplete
+- Origin / Destination text inputs (geocoded via Nominatim on submit)
 - Departure time picker (defaults to "now")
 - Vehicle category selector (dropdown)
 - "Estimate Toll" button
@@ -273,14 +290,15 @@ Portal GPS coordinates and rates need to be collected from:
 
 ## Tech Stack Summary
 
-| Component | Technology | Reason |
-|-----------|-----------|--------|
-| Backend | Python + FastAPI | Fast async API, great for prototyping |
-| Route API | Google Maps Routes API | Best routing data, polyline support |
-| Frontend Map | Google Maps JavaScript API | Integrated autocomplete + map rendering |
-| Frontend UI | Vanilla HTML/CSS/JS | Minimal, no build step needed initially |
-| Toll Data | JSON files | Easy to edit, version control friendly |
-| Deployment | Docker (future) | Simple containerized deployment |
+| Component | Technology | Cost | Notes |
+|-----------|-----------|------|-------|
+| Backend | Python + FastAPI | Free | Fast async API, great for prototyping |
+| Routing | OSRM (demo server) | Free | No key needed. Self-host for production |
+| Geocoding | Nominatim | Free | No key needed. 1 req/sec rate limit |
+| Frontend Map | Leaflet.js + OSM tiles | Free | No key needed. Open source |
+| Frontend UI | Vanilla HTML/CSS/JS | Free | No build step needed |
+| Toll Data | JSON files | Free | Hand-curated from official PDFs |
+| **Total** | | **$0** | |
 
 ---
 
@@ -290,7 +308,7 @@ Portal GPS coordinates and rates need to be collected from:
 Tag-calculator/
 ├── PLAN.md
 ├── pyproject.toml
-├── .env.example              # GOOGLE_MAPS_API_KEY=your_key_here
+├── .env.example              # (no keys needed for MVP)
 ├── src/
 │   ├── __init__.py
 │   ├── main.py               # FastAPI app entry point
@@ -346,10 +364,15 @@ Tag-calculator/
 - [MOP — Mapas de peajes y pórticos](https://www.mop.gob.cl/serviciosmop/mapas-de-peajes-y-porticos/)
 - [Dirección General de Concesiones — Valores urbanas](https://concesiones.mop.gob.cl/peajesporticos/paginas/valores-urbanas.aspx)
 
-### API Documentation
-- [Google Maps Routes API — Compute Routes](https://developers.google.com/maps/documentation/routes/overview)
-- [Google Maps Routes API — Calculate Toll Fees](https://developers.google.com/maps/documentation/routes/calculate_toll_fees)
-- [Google Maps TollPass Reference](https://developers.google.com/maps/documentation/routes_preferred/reference/rest/Shared.Types/TollPass) (Chile NOT supported)
+### Free API Documentation
+- [OSRM API — Route Service](http://project-osrm.org/docs/v5.24.0/api/#route-service) (free routing, no key)
+- [Nominatim API — Search](https://nominatim.org/release-docs/develop/api/Search/) (free geocoding, no key)
+- [Leaflet.js — Documentation](https://leafletjs.com/reference.html) (free map library)
+
+### Paid APIs (future upgrade path)
+- [Google Maps Routes API](https://developers.google.com/maps/documentation/routes/overview) — better routing accuracy
+- [TollGuru Toll API](https://tollguru.com/toll-api-docs) — pre-built toll calculation ($80+/mo)
+- [Maplink Toll API](https://developers.maplink.global/en/category/toll-en/) — Chile-focused, free-flow aware
 
 ### Existing Calculators (for reference/validation)
 - [PeajesChile — Calculadora TAG](https://peajeschile.com/calcular-tag/)
