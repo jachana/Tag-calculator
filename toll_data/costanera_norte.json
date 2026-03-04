@@ -3,149 +3,290 @@
   "display_name": "Costanera Norte",
   "operator": "Sociedad Concesionaria Costanera Norte S.A.",
   "tolling_type": "open",
-  "year": 2026,
+  "year": 2025,
+  "notes": "Portal IDs and street references from official 2025/2026 tariff. GPS coordinates are approximate. 30 gantries total. Rates are 2025/2026 TBFP/TBP/TS for Cat 1&4 (CLP).",
+  "axes": [
+    {
+      "name": "Eje Kennedy",
+      "description": "From Enlace Estoril (Las Condes) to Puente Lo Saldes (Vitacura), 7.4 km",
+      "length_km": 7.4
+    },
+    {
+      "name": "Eje Costanera (Oriente-Poniente)",
+      "description": "From Lo Barnechea (east) to Ruta 68 / Aeropuerto (west), ~35 km. Sectors: Oriente, Centro, Poniente, Aeropuerto/Ruta68",
+      "length_km": 35
+    }
+  ],
   "portals": [
     {
-      "id": "cn_p1_e",
-      "name": "P1 - Lo Barnechea (East)",
-      "lat": -33.3990,
-      "lng": -70.5280,
+      "_comment": "=== EJE KENNEDY: Estoril to Lo Saldes ==="
+    },
+    {
+      "id": "cn_P7",
+      "name": "P7 (Estoril - Las Tranqueras)",
+      "reference": "Between Enlace Estoril and Las Tranqueras, Av. Kennedy, Las Condes",
+      "segment": "Estoril - Las Tranqueras",
+      "axis": "kennedy",
+      "lat": -33.4070,
+      "lng": -70.5520,
       "direction_bearing": 270,
       "rates": {
-        "cat_1": { "tbfp": 140, "tbp": 280, "ts": 420 },
-        "cat_4": { "tbfp": 280, "tbp": 560, "ts": 840 },
-        "cat_2": { "tbfp": 560, "tbp": 1120, "ts": 1680 },
-        "cat_3": { "tbfp": 840, "tbp": 1680, "ts": 2520 }
+        "cat_1": { "tbfp": 250, "tbp": 500, "ts": 750 },
+        "cat_4": { "tbfp": 250, "tbp": 500, "ts": 750 },
+        "cat_2": { "tbfp": 500, "tbp": 1001, "ts": 1501 },
+        "cat_3": { "tbfp": 750, "tbp": 1501, "ts": 2251 }
       }
     },
     {
-      "id": "cn_p2_e",
-      "name": "P2 - Las Condes (East)",
-      "lat": -33.4105,
+      "id": "cn_P8_0",
+      "name": "P8.0 (Las Tranqueras - Costanera Norte)",
+      "reference": "Near Las Tranqueras / Puente Lo Saldes, Kennedy axis heading west toward Costanera Norte junction. Length 5.46 km",
+      "segment": "Las Tranqueras - Costanera Norte",
+      "axis": "kennedy",
+      "lat": -33.4100,
+      "lng": -70.5780,
+      "direction_bearing": 270,
+      "rates": {
+        "cat_1": { "tbfp": 584, "tbp": 1168, "ts": 1751 },
+        "cat_4": { "tbfp": 584, "tbp": 1168, "ts": 1751 },
+        "cat_2": { "tbfp": 1168, "tbp": 2335, "ts": 3503 },
+        "cat_3": { "tbfp": 1751, "tbp": 3503, "ts": 5254 }
+      }
+    },
+    {
+      "id": "cn_P8_1",
+      "name": "P8.1 (Las Tranqueras - Costanera Norte)",
+      "reference": "Along Kennedy axis between Las Tranqueras and Costanera Norte junction",
+      "segment": "Las Tranqueras - Costanera Norte",
+      "axis": "kennedy",
+      "lat": -33.4120,
+      "lng": -70.5900,
+      "direction_bearing": 270,
+      "rates": {
+        "cat_1": { "tbfp": 584, "tbp": 1168, "ts": 1751 },
+        "cat_4": { "tbfp": 584, "tbp": 1168, "ts": 1751 },
+        "cat_2": { "tbfp": 1168, "tbp": 2335, "ts": 3503 },
+        "cat_3": { "tbfp": 1751, "tbp": 3503, "ts": 5254 }
+      }
+    },
+    {
+      "id": "cn_P8_2",
+      "name": "P8.2 (Las Tranqueras - Costanera Norte)",
+      "reference": "Along Kennedy axis approaching Costanera Norte junction",
+      "segment": "Las Tranqueras - Costanera Norte",
+      "axis": "kennedy",
+      "lat": -33.4145,
+      "lng": -70.6010,
+      "direction_bearing": 270,
+      "rates": {
+        "cat_1": { "tbfp": 584, "tbp": 1168, "ts": 1751 },
+        "cat_4": { "tbfp": 584, "tbp": 1168, "ts": 1751 },
+        "cat_2": { "tbfp": 1168, "tbp": 2335, "ts": 3503 },
+        "cat_3": { "tbfp": 1751, "tbp": 3503, "ts": 5254 }
+      }
+    },
+    {
+      "id": "cn_P8_3",
+      "name": "P8.3 (Las Tranqueras - Costanera Norte)",
+      "reference": "Near Costanera Norte junction on Kennedy axis",
+      "segment": "Las Tranqueras - Costanera Norte",
+      "axis": "kennedy",
+      "lat": -33.4160,
+      "lng": -70.6080,
+      "direction_bearing": 270,
+      "rates": {
+        "cat_1": { "tbfp": 584, "tbp": 1168, "ts": 1751 },
+        "cat_4": { "tbfp": 584, "tbp": 1168, "ts": 1751 },
+        "cat_2": { "tbfp": 1168, "tbp": 2335, "ts": 3503 },
+        "cat_3": { "tbfp": 1751, "tbp": 3503, "ts": 5254 }
+      }
+    },
+    {
+      "_comment": "=== EJE COSTANERA: Oriente (East) sector ==="
+    },
+    {
+      "id": "cn_P0",
+      "name": "P0 (Puente Padre Arteaga - Puente San Francisco)",
+      "reference": "Eastern sector, between Puente Padre Arteaga and Puente San Francisco along Río Mapocho, Lo Barnechea/Vitacura",
+      "segment": "Puente Padre Arteaga - Puente San Francisco",
+      "axis": "costanera",
+      "lat": -33.4080,
+      "lng": -70.5420,
+      "direction_bearing": 270,
+      "rates": {
+        "cat_1": { "tbfp": 150, "tbp": 300, "ts": 449 },
+        "cat_4": { "tbfp": 150, "tbp": 300, "ts": 449 },
+        "cat_2": { "tbfp": 300, "tbp": 599, "ts": 899 },
+        "cat_3": { "tbfp": 449, "tbp": 899, "ts": 1348 }
+      }
+    },
+    {
+      "id": "cn_P1",
+      "name": "P1 (Gran Vía - Puente San Francisco)",
+      "reference": "Between Gran Vía and Puente San Francisco, Vitacura/Las Condes area along Río Mapocho",
+      "segment": "Puente San Francisco - Gran Vía",
+      "axis": "costanera",
+      "lat": -33.4115,
       "lng": -70.5680,
       "direction_bearing": 270,
       "rates": {
-        "cat_1": { "tbfp": 200, "tbp": 400, "ts": 600 },
-        "cat_4": { "tbfp": 400, "tbp": 800, "ts": 1200 },
-        "cat_2": { "tbfp": 800, "tbp": 1600, "ts": 2400 },
-        "cat_3": { "tbfp": 1200, "tbp": 2400, "ts": 3600 }
+        "cat_1": { "tbfp": 449, "tbp": 899, "ts": 1348 },
+        "cat_4": { "tbfp": 449, "tbp": 899, "ts": 1348 },
+        "cat_2": { "tbfp": 899, "tbp": 1798, "ts": 2697 },
+        "cat_3": { "tbfp": 1348, "tbp": 2697, "ts": 4045 }
       }
     },
     {
-      "id": "cn_p3_e",
-      "name": "P3 - Providencia (East)",
-      "lat": -33.4185,
-      "lng": -70.5990,
+      "id": "cn_P2_1",
+      "name": "P2.1 (Puente Centenario - Gran Vía)",
+      "reference": "Between Puente Centenario and Gran Vía, Providencia/Vitacura along Río Mapocho",
+      "segment": "Gran Vía - Centenario",
+      "axis": "costanera",
+      "lat": -33.4170,
+      "lng": -70.5950,
       "direction_bearing": 270,
       "rates": {
-        "cat_1": { "tbfp": 175, "tbp": 350, "ts": 525 },
-        "cat_4": { "tbfp": 350, "tbp": 700, "ts": 1050 },
-        "cat_2": { "tbfp": 700, "tbp": 1400, "ts": 2100 },
-        "cat_3": { "tbfp": 1050, "tbp": 2100, "ts": 3150 }
+        "cat_1": { "tbfp": 426, "tbp": 852, "ts": 1278 },
+        "cat_4": { "tbfp": 426, "tbp": 852, "ts": 1278 },
+        "cat_2": { "tbfp": 852, "tbp": 1704, "ts": 2556 },
+        "cat_3": { "tbfp": 1278, "tbp": 2556, "ts": 3833 }
       }
     },
     {
-      "id": "cn_p4",
-      "name": "P4 - Río Mapocho Centro",
-      "lat": -33.4285,
+      "id": "cn_P2_2",
+      "name": "P2.2 (Puente Lo Saldes - Centenario)",
+      "reference": "Between Puente Lo Saldes and Centenario, Providencia along Río Mapocho",
+      "segment": "Centenario - Puente Lo Saldes",
+      "axis": "costanera",
+      "lat": -33.4200,
+      "lng": -70.6100,
+      "direction_bearing": 270,
+      "rates": {
+        "cat_1": { "tbfp": 264, "tbp": 529, "ts": 793 },
+        "cat_4": { "tbfp": 264, "tbp": 529, "ts": 793 },
+        "cat_2": { "tbfp": 529, "tbp": 1057, "ts": 1586 },
+        "cat_3": { "tbfp": 793, "tbp": 1586, "ts": 2379 }
+      }
+    },
+    {
+      "_comment": "=== EJE COSTANERA: Centro sector (tunnel area) ==="
+    },
+    {
+      "id": "cn_SB",
+      "name": "SB (Salida Bellavista)",
+      "reference": "Bellavista exit, near Bellavista / Pío Nono area, tunnel section",
+      "segment": "Salida Bellavista",
+      "axis": "costanera",
+      "lat": -33.4310,
+      "lng": -70.6340,
+      "direction_bearing": 270,
+      "rates": {
+        "cat_1": { "tbfp": 234, "tbp": 468, "ts": 701 },
+        "cat_4": { "tbfp": 234, "tbp": 468, "ts": 701 },
+        "cat_2": { "tbfp": 468, "tbp": 935, "ts": 1403 },
+        "cat_3": { "tbfp": 701, "tbp": 1403, "ts": 2104 }
+      }
+    },
+    {
+      "id": "cn_P3",
+      "name": "P3 (Puente Lo Saldes - Vivaceta)",
+      "reference": "Between Puente Lo Saldes and Vivaceta, through tunnel section, central Santiago / Recoleta / Independencia",
+      "segment": "Puente Lo Saldes - Vivaceta",
+      "axis": "costanera",
+      "lat": -33.4270,
       "lng": -70.6430,
       "direction_bearing": 270,
       "rates": {
-        "cat_1": { "tbfp": 150, "tbp": 300, "ts": 450 },
-        "cat_4": { "tbfp": 300, "tbp": 600, "ts": 900 },
-        "cat_2": { "tbfp": 600, "tbp": 1200, "ts": 1800 },
-        "cat_3": { "tbfp": 900, "tbp": 1800, "ts": 2700 }
+        "cat_1": { "tbfp": 719, "tbp": 1438, "ts": 2157 },
+        "cat_4": { "tbfp": 719, "tbp": 1438, "ts": 2157 },
+        "cat_2": { "tbfp": 1438, "tbp": 2877, "ts": 4315 },
+        "cat_3": { "tbfp": 2157, "tbp": 4315, "ts": 6472 }
       }
     },
     {
-      "id": "cn_p5",
-      "name": "P5 - Quinta Normal",
-      "lat": -33.4310,
-      "lng": -70.6920,
+      "id": "cn_EP",
+      "name": "EP (Entrada Purísima)",
+      "reference": "Purísima entrance, near Bellavista / Patronato area",
+      "segment": "Entrada Purísima",
+      "axis": "costanera",
+      "lat": -33.4300,
+      "lng": -70.6380,
+      "direction_bearing": 90,
+      "rates": {
+        "cat_1": { "tbfp": 226, "tbp": 452, "ts": 677 },
+        "cat_4": { "tbfp": 226, "tbp": 452, "ts": 677 },
+        "cat_2": { "tbfp": 452, "tbp": 903, "ts": 1355 },
+        "cat_3": { "tbfp": 677, "tbp": 1355, "ts": 2032 }
+      }
+    },
+    {
+      "id": "cn_EV",
+      "name": "EV (Entrada Vivaceta)",
+      "reference": "Vivaceta entrance, Independencia area",
+      "segment": "Entrada Vivaceta",
+      "axis": "costanera",
+      "lat": -33.4250,
+      "lng": -70.6600,
+      "direction_bearing": 90,
+      "rates": {
+        "cat_1": { "tbfp": 119, "tbp": 239, "ts": 358 },
+        "cat_4": { "tbfp": 119, "tbp": 239, "ts": 358 },
+        "cat_2": { "tbfp": 239, "tbp": 477, "ts": 716 },
+        "cat_3": { "tbfp": 358, "tbp": 716, "ts": 1074 }
+      }
+    },
+    {
+      "_comment": "=== EJE COSTANERA: Poniente sector ==="
+    },
+    {
+      "id": "cn_P4",
+      "name": "P4 (Vivaceta - Carrascal)",
+      "reference": "Between Vivaceta and Carrascal, Independencia / Renca / Quinta Normal along Río Mapocho",
+      "segment": "Vivaceta - Carrascal",
+      "axis": "costanera",
+      "lat": -33.4230,
+      "lng": -70.6780,
       "direction_bearing": 270,
       "rates": {
-        "cat_1": { "tbfp": 130, "tbp": 260, "ts": 390 },
-        "cat_4": { "tbfp": 260, "tbp": 520, "ts": 780 },
-        "cat_2": { "tbfp": 520, "tbp": 1040, "ts": 1560 },
-        "cat_3": { "tbfp": 780, "tbp": 1560, "ts": 2340 }
+        "cat_1": { "tbfp": 716, "tbp": 1432, "ts": 2148 },
+        "cat_4": { "tbfp": 716, "tbp": 1432, "ts": 2148 },
+        "cat_2": { "tbfp": 1432, "tbp": 2863, "ts": 4295 },
+        "cat_3": { "tbfp": 2148, "tbp": 4295, "ts": 6443 }
       }
     },
     {
-      "id": "cn_p6",
-      "name": "P6 - Ruta 68",
-      "lat": -33.4290,
+      "id": "cn_P5",
+      "name": "P5 (Carrascal - Petersen)",
+      "reference": "Between Carrascal and Petersen, Quinta Normal / Cerro Navia area",
+      "segment": "Carrascal - Petersen",
+      "axis": "costanera",
+      "lat": -33.4220,
+      "lng": -70.7080,
+      "direction_bearing": 270,
+      "rates": {
+        "cat_1": { "tbfp": 240, "tbp": 480, "ts": 719 },
+        "cat_4": { "tbfp": 240, "tbp": 480, "ts": 719 },
+        "cat_2": { "tbfp": 480, "tbp": 959, "ts": 1439 },
+        "cat_3": { "tbfp": 719, "tbp": 1439, "ts": 2158 }
+      }
+    },
+    {
+      "_comment": "=== EJE COSTANERA: Aeropuerto/Ruta 68 sector ==="
+    },
+    {
+      "id": "cn_P6",
+      "name": "P6 (Petersen - Américo Vespucio Poniente)",
+      "reference": "Between Petersen and Américo Vespucio Poniente, Pudahuel / Ruta 68 area",
+      "segment": "Petersen - Américo Vespucio Poniente",
+      "axis": "costanera",
+      "lat": -33.4210,
       "lng": -70.7350,
       "direction_bearing": 270,
       "rates": {
-        "cat_1": { "tbfp": 200, "tbp": 400, "ts": 600 },
-        "cat_4": { "tbfp": 400, "tbp": 800, "ts": 1200 },
-        "cat_2": { "tbfp": 800, "tbp": 1600, "ts": 2400 },
-        "cat_3": { "tbfp": 1200, "tbp": 2400, "ts": 3600 }
-      }
-    },
-    {
-      "id": "cn_p1_w",
-      "name": "P1 - Ruta 68 (West)",
-      "lat": -33.4290,
-      "lng": -70.7350,
-      "direction_bearing": 90,
-      "rates": {
-        "cat_1": { "tbfp": 200, "tbp": 400, "ts": 600 },
-        "cat_4": { "tbfp": 400, "tbp": 800, "ts": 1200 },
-        "cat_2": { "tbfp": 800, "tbp": 1600, "ts": 2400 },
-        "cat_3": { "tbfp": 1200, "tbp": 2400, "ts": 3600 }
-      }
-    },
-    {
-      "id": "cn_p2_w",
-      "name": "P2 - Quinta Normal (West)",
-      "lat": -33.4310,
-      "lng": -70.6920,
-      "direction_bearing": 90,
-      "rates": {
-        "cat_1": { "tbfp": 130, "tbp": 260, "ts": 390 },
-        "cat_4": { "tbfp": 260, "tbp": 520, "ts": 780 },
-        "cat_2": { "tbfp": 520, "tbp": 1040, "ts": 1560 },
-        "cat_3": { "tbfp": 780, "tbp": 1560, "ts": 2340 }
-      }
-    },
-    {
-      "id": "cn_p3_w",
-      "name": "P3 - Centro (West)",
-      "lat": -33.4285,
-      "lng": -70.6430,
-      "direction_bearing": 90,
-      "rates": {
-        "cat_1": { "tbfp": 150, "tbp": 300, "ts": 450 },
-        "cat_4": { "tbfp": 300, "tbp": 600, "ts": 900 },
-        "cat_2": { "tbfp": 600, "tbp": 1200, "ts": 1800 },
-        "cat_3": { "tbfp": 900, "tbp": 1800, "ts": 2700 }
-      }
-    },
-    {
-      "id": "cn_p4_w",
-      "name": "P4 - Providencia (West)",
-      "lat": -33.4185,
-      "lng": -70.5990,
-      "direction_bearing": 90,
-      "rates": {
-        "cat_1": { "tbfp": 175, "tbp": 350, "ts": 525 },
-        "cat_4": { "tbfp": 350, "tbp": 700, "ts": 1050 },
-        "cat_2": { "tbfp": 700, "tbp": 1400, "ts": 2100 },
-        "cat_3": { "tbfp": 1050, "tbp": 2100, "ts": 3150 }
-      }
-    },
-    {
-      "id": "cn_p5_w",
-      "name": "P5 - Las Condes (West)",
-      "lat": -33.4105,
-      "lng": -70.5680,
-      "direction_bearing": 90,
-      "rates": {
-        "cat_1": { "tbfp": 200, "tbp": 400, "ts": 600 },
-        "cat_4": { "tbfp": 400, "tbp": 800, "ts": 1200 },
-        "cat_2": { "tbfp": 800, "tbp": 1600, "ts": 2400 },
-        "cat_3": { "tbfp": 1200, "tbp": 2400, "ts": 3600 }
+        "cat_1": { "tbfp": 351, "tbp": 703, "ts": 1054 },
+        "cat_4": { "tbfp": 351, "tbp": 703, "ts": 1054 },
+        "cat_2": { "tbfp": 703, "tbp": 1405, "ts": 2108 },
+        "cat_3": { "tbfp": 1054, "tbp": 2108, "ts": 3162 }
       }
     }
   ]

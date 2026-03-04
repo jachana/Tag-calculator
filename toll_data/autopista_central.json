@@ -3,162 +3,575 @@
   "display_name": "Autopista Central",
   "operator": "Sociedad Concesionaria Autopista Central S.A.",
   "tolling_type": "open",
-  "year": 2026,
+  "year": 2025,
+  "notes": "Portal IDs and street references from official 2025 tariff. GPS coordinates are approximate, derived from known cross-street intersections with the highway. Rates are 2025 TBFP/TBP/TS for Cat 1&4 (CLP).",
+  "axes": [
+    {
+      "name": "Eje Norte-Sur",
+      "route": "Ruta 5 / Panamericana",
+      "description": "From Ruta 5 Norte (Quilicura/A. Vespucio Norte) to Ruta 5 Sur (Puente Maipo/Los Guindos)",
+      "length_km": 41
+    },
+    {
+      "name": "Eje General Velásquez",
+      "route": "Ruta CH-74 / Av. General Velásquez",
+      "description": "From Ruta 5 Norte to Ruta 5 Sur (Las Acacias), bypassing downtown to the west",
+      "length_km": 21
+    }
+  ],
   "portals": [
     {
-      "id": "ac_pa1",
-      "name": "PA1 - Quilicura",
-      "lat": -33.3536,
-      "lng": -70.6808,
-      "direction_bearing": 180,
+      "_comment": "=== EJE NORTE-SUR: South to North (from Puente Maipo area to Quilicura) ===",
+      "_comment2": "Portal order: PA1, PA4, PA37, PA6, PA32, PA8, PA5, PA3, PA7, PA30, PA10, PA31, PA13, PA16, PA17, PA18, PA15, PA14, PA12, PA11, PA9"
+    },
+    {
+      "id": "ac_ns_PA1",
+      "name": "PA1 (Los Guindos - La Capilla)",
+      "reference": "Near Los Guindos / Puente Maipo area, southern terminus",
+      "segment": "Los Guindos - La Capilla",
+      "segment_km": 7.68,
+      "axis": "norte_sur",
+      "lat": -33.7100,
+      "lng": -70.7080,
+      "direction_bearing": 0,
       "rates": {
-        "cat_1": { "tbfp": 207, "tbp": 414, "ts": 621 },
-        "cat_4": { "tbfp": 414, "tbp": 828, "ts": 1242 },
-        "cat_2": { "tbfp": 828, "tbp": 1656, "ts": 2484 },
-        "cat_3": { "tbfp": 1242, "tbp": 2484, "ts": 3726 }
+        "cat_1": { "tbfp": 839, "tbp": 1679, "ts": 2519 },
+        "cat_4": { "tbfp": 839, "tbp": 1679, "ts": 2519 },
+        "cat_2": { "tbfp": 1679, "tbp": 3358, "ts": 5037 },
+        "cat_3": { "tbfp": 2519, "tbp": 5037, "ts": 7556 }
       }
     },
     {
-      "id": "ac_pa2",
-      "name": "PA2 - Conchalí",
-      "lat": -33.3810,
-      "lng": -70.6760,
-      "direction_bearing": 180,
+      "id": "ac_ns_PA2",
+      "name": "PA2 (Los Guindos - La Capilla)",
+      "reference": "Between Los Guindos and La Capilla, second gantry in same segment",
+      "segment": "Los Guindos - La Capilla",
+      "segment_km": 7.68,
+      "axis": "norte_sur",
+      "lat": -33.6800,
+      "lng": -70.7050,
+      "direction_bearing": 0,
       "rates": {
-        "cat_1": { "tbfp": 207, "tbp": 414, "ts": 621 },
-        "cat_4": { "tbfp": 414, "tbp": 828, "ts": 1242 },
-        "cat_2": { "tbfp": 828, "tbp": 1656, "ts": 2484 },
-        "cat_3": { "tbfp": 1242, "tbp": 2484, "ts": 3726 }
+        "cat_1": { "tbfp": 839, "tbp": 1679, "ts": 2519 },
+        "cat_4": { "tbfp": 839, "tbp": 1679, "ts": 2519 },
+        "cat_2": { "tbfp": 1679, "tbp": 3358, "ts": 5037 },
+        "cat_3": { "tbfp": 2519, "tbp": 5037, "ts": 7556 }
       }
     },
     {
-      "id": "ac_pb1",
-      "name": "PB1 - Independencia",
-      "lat": -33.4095,
-      "lng": -70.6690,
-      "direction_bearing": 180,
+      "id": "ac_ns_PA4",
+      "name": "PA4 (Calera de Tango - La Capilla)",
+      "reference": "Near La Capilla, San Bernardo",
+      "segment": "Calera de Tango - La Capilla",
+      "segment_km": 1.25,
+      "axis": "norte_sur",
+      "lat": -33.6450,
+      "lng": -70.7020,
+      "direction_bearing": 0,
       "rates": {
-        "cat_1": { "tbfp": 175, "tbp": 350, "ts": 525 },
-        "cat_4": { "tbfp": 350, "tbp": 700, "ts": 1050 },
-        "cat_2": { "tbfp": 700, "tbp": 1400, "ts": 2100 },
-        "cat_3": { "tbfp": 1050, "tbp": 2100, "ts": 3150 }
+        "cat_1": { "tbfp": 126, "tbp": 251, "ts": 377 },
+        "cat_4": { "tbfp": 126, "tbp": 251, "ts": 377 },
+        "cat_2": { "tbfp": 251, "tbp": 502, "ts": 753 },
+        "cat_3": { "tbfp": 377, "tbp": 753, "ts": 1130 }
       }
     },
     {
-      "id": "ac_pb2",
-      "name": "PB2 - Santiago Centro",
-      "lat": -33.4370,
-      "lng": -70.6600,
-      "direction_bearing": 180,
+      "id": "ac_ns_PA37",
+      "name": "PA37 (Colón - Calera de Tango)",
+      "reference": "Between Colón and Calera de Tango, San Bernardo",
+      "segment": "Colón - Calera de Tango",
+      "segment_km": 4.38,
+      "axis": "norte_sur",
+      "lat": -33.6200,
+      "lng": -70.6990,
+      "direction_bearing": 0,
       "rates": {
-        "cat_1": { "tbfp": 175, "tbp": 350, "ts": 525 },
-        "cat_4": { "tbfp": 350, "tbp": 700, "ts": 1050 },
-        "cat_2": { "tbfp": 700, "tbp": 1400, "ts": 2100 },
-        "cat_3": { "tbfp": 1050, "tbp": 2100, "ts": 3150 }
+        "cat_1": { "tbfp": 440, "tbp": 880, "ts": 1320 },
+        "cat_4": { "tbfp": 440, "tbp": 880, "ts": 1320 },
+        "cat_2": { "tbfp": 880, "tbp": 1760, "ts": 2640 },
+        "cat_3": { "tbfp": 1320, "tbp": 2640, "ts": 3960 }
       }
     },
     {
-      "id": "ac_pc1",
-      "name": "PC1 - Alameda",
-      "lat": -33.4520,
+      "id": "ac_ns_PA6",
+      "name": "PA6 (Lo Blanco - Colón)",
+      "reference": "Near Colón / Lo Blanco intersection, San Bernardo",
+      "segment": "Lo Blanco - Colón",
+      "segment_km": 2.5,
+      "axis": "norte_sur",
+      "lat": -33.5950,
+      "lng": -70.6960,
+      "direction_bearing": 0,
+      "rates": {
+        "cat_1": { "tbfp": 251, "tbp": 502, "ts": 753 },
+        "cat_4": { "tbfp": 251, "tbp": 502, "ts": 753 },
+        "cat_2": { "tbfp": 502, "tbp": 1004, "ts": 1506 },
+        "cat_3": { "tbfp": 753, "tbp": 1506, "ts": 2259 }
+      }
+    },
+    {
+      "id": "ac_ns_PA32",
+      "name": "PA32 (Las Acacias - Lo Blanco)",
+      "reference": "Near Lo Blanco / Las Acacias area",
+      "segment": "Las Acacias - Lo Blanco",
+      "segment_km": 2.0,
+      "axis": "norte_sur",
+      "lat": -33.5700,
+      "lng": -70.6880,
+      "direction_bearing": 0,
+      "rates": {
+        "cat_1": { "tbfp": 201, "tbp": 402, "ts": 603 },
+        "cat_4": { "tbfp": 201, "tbp": 402, "ts": 603 },
+        "cat_2": { "tbfp": 402, "tbp": 804, "ts": 1206 },
+        "cat_3": { "tbfp": 603, "tbp": 1206, "ts": 1809 }
+      }
+    },
+    {
+      "id": "ac_ns_PA8",
+      "name": "PA8 (Las Acacias - A. Vespucio)",
+      "reference": "Near Las Acacias, between A. Vespucio Sur and Lo Espejo",
+      "segment": "Las Acacias - A. Vespucio",
+      "segment_km": 3.0,
+      "axis": "norte_sur",
+      "lat": -33.5480,
+      "lng": -70.6780,
+      "direction_bearing": 0,
+      "rates": {
+        "cat_1": { "tbfp": 324, "tbp": 647, "ts": 971 },
+        "cat_4": { "tbfp": 324, "tbp": 647, "ts": 971 },
+        "cat_2": { "tbfp": 647, "tbp": 1294, "ts": 1941 },
+        "cat_3": { "tbfp": 971, "tbp": 1941, "ts": 2912 }
+      }
+    },
+    {
+      "id": "ac_ns_PA5",
+      "name": "PA5 (Colón - Las Acacias)",
+      "reference": "Between Colón and Las Acacias junction",
+      "segment": "Colón - Las Acacias",
+      "segment_km": 3.2,
+      "axis": "norte_sur",
+      "lat": -33.5600,
+      "lng": -70.6850,
+      "direction_bearing": 180,
+      "rates": {
+        "cat_1": { "tbfp": 324, "tbp": 647, "ts": 971 },
+        "cat_4": { "tbfp": 324, "tbp": 647, "ts": 971 },
+        "cat_2": { "tbfp": 647, "tbp": 1294, "ts": 1941 },
+        "cat_3": { "tbfp": 971, "tbp": 1941, "ts": 2912 }
+      }
+    },
+    {
+      "id": "ac_ns_PA3",
+      "name": "PA3 (La Capilla - Colón)",
+      "reference": "Between La Capilla and Colón, San Bernardo. Confirmed on Waze.",
+      "segment": "La Capilla - Colón",
+      "segment_km": 5.63,
+      "axis": "norte_sur",
+      "lat": -33.6050,
+      "lng": -70.6970,
+      "direction_bearing": 180,
+      "rates": {
+        "cat_1": { "tbfp": 566, "tbp": 1131, "ts": 1697 },
+        "cat_4": { "tbfp": 566, "tbp": 1131, "ts": 1697 },
+        "cat_2": { "tbfp": 1131, "tbp": 2262, "ts": 3393 },
+        "cat_3": { "tbfp": 1697, "tbp": 3393, "ts": 5090 }
+      }
+    },
+    {
+      "id": "ac_ns_PA7",
+      "name": "PA7 (A. Vespucio - Departamental)",
+      "reference": "Between Américo Vespucio Sur and Departamental, near La Cisterna/San Miguel",
+      "segment": "A. Vespucio - Departamental",
+      "segment_km": 3.5,
+      "axis": "norte_sur",
+      "lat": -33.5200,
+      "lng": -70.6680,
+      "direction_bearing": 0,
+      "rates": {
+        "cat_1": { "tbfp": 437, "tbp": 874, "ts": 1311 },
+        "cat_4": { "tbfp": 437, "tbp": 874, "ts": 1311 },
+        "cat_2": { "tbfp": 874, "tbp": 1748, "ts": 2622 },
+        "cat_3": { "tbfp": 1311, "tbp": 2622, "ts": 3933 }
+      }
+    },
+    {
+      "id": "ac_ns_PA30",
+      "name": "PA30 (Departamental - Carlos Valdovinos)",
+      "reference": "Between Departamental and Carlos Valdovinos, San Miguel / Pedro Aguirre Cerda",
+      "segment": "Departamental - Carlos Valdovinos",
+      "segment_km": 2.8,
+      "axis": "norte_sur",
+      "lat": -33.4940,
+      "lng": -70.6630,
+      "direction_bearing": 0,
+      "rates": {
+        "cat_1": { "tbfp": 380, "tbp": 760, "ts": 1139 },
+        "cat_4": { "tbfp": 380, "tbp": 760, "ts": 1139 },
+        "cat_2": { "tbfp": 760, "tbp": 1519, "ts": 2279 },
+        "cat_3": { "tbfp": 1139, "tbp": 2279, "ts": 3418 }
+      }
+    },
+    {
+      "id": "ac_ns_PA10",
+      "name": "PA10 (Carlos Valdovinos - Alameda)",
+      "reference": "Between Carlos Valdovinos and Av. Libertador Bernardo O'Higgins (Alameda), near Parque O'Higgins",
+      "segment": "Carlos Valdovinos - Alameda",
+      "segment_km": 2.0,
+      "axis": "norte_sur",
+      "lat": -33.4720,
       "lng": -70.6620,
-      "direction_bearing": 180,
+      "direction_bearing": 0,
       "rates": {
-        "cat_1": { "tbfp": 160, "tbp": 320, "ts": 480 },
-        "cat_4": { "tbfp": 320, "tbp": 640, "ts": 960 },
-        "cat_2": { "tbfp": 640, "tbp": 1280, "ts": 1920 },
-        "cat_3": { "tbfp": 960, "tbp": 1920, "ts": 2880 }
+        "cat_1": { "tbfp": 276, "tbp": 553, "ts": 829 },
+        "cat_4": { "tbfp": 276, "tbp": 553, "ts": 829 },
+        "cat_2": { "tbfp": 553, "tbp": 1105, "ts": 1658 },
+        "cat_3": { "tbfp": 829, "tbp": 1658, "ts": 2487 }
       }
     },
     {
-      "id": "ac_pc2",
-      "name": "PC2 - San Miguel",
-      "lat": -33.4880,
+      "id": "ac_ns_PA31",
+      "name": "PA31 (Alameda - Río Mapocho)",
+      "reference": "Between Alameda and Río Mapocho, through central Santiago (tunnel section)",
+      "segment": "Alameda - Río Mapocho",
+      "segment_km": 2.5,
+      "axis": "norte_sur",
+      "lat": -33.4480,
       "lng": -70.6580,
+      "direction_bearing": 0,
+      "rates": {
+        "cat_1": { "tbfp": 357, "tbp": 713, "ts": 1070 },
+        "cat_4": { "tbfp": 357, "tbp": 713, "ts": 1070 },
+        "cat_2": { "tbfp": 713, "tbp": 1427, "ts": 2140 },
+        "cat_3": { "tbfp": 1070, "tbp": 2140, "ts": 3210 }
+      }
+    },
+    {
+      "id": "ac_ns_PA13",
+      "name": "PA13 (Río Mapocho - 14 de la Fama)",
+      "reference": "North of Río Mapocho, Independencia/Renca area toward 14 de la Fama",
+      "segment": "Río Mapocho - 14 de la Fama",
+      "segment_km": 3.5,
+      "axis": "norte_sur",
+      "lat": -33.4250,
+      "lng": -70.6630,
+      "direction_bearing": 0,
+      "rates": {
+        "cat_1": { "tbfp": 176, "tbp": 352, "ts": 527 },
+        "cat_4": { "tbfp": 176, "tbp": 352, "ts": 527 },
+        "cat_2": { "tbfp": 352, "tbp": 703, "ts": 1055 },
+        "cat_3": { "tbfp": 527, "tbp": 1055, "ts": 1582 }
+      }
+    },
+    {
+      "id": "ac_ns_PA16",
+      "name": "PA16 (14 de la Fama - A. Vespucio Norte)",
+      "reference": "Between 14 de la Fama and Américo Vespucio Norte, Renca/Quilicura area",
+      "segment": "14 de la Fama - A. Vespucio Norte",
+      "segment_km": 4.0,
+      "axis": "norte_sur",
+      "lat": -33.3950,
+      "lng": -70.6700,
+      "direction_bearing": 0,
+      "rates": {
+        "cat_1": { "tbfp": 411, "tbp": 822, "ts": 1233 },
+        "cat_4": { "tbfp": 411, "tbp": 822, "ts": 1233 },
+        "cat_2": { "tbfp": 822, "tbp": 1644, "ts": 2465 },
+        "cat_3": { "tbfp": 1233, "tbp": 2465, "ts": 3698 }
+      }
+    },
+    {
+      "id": "ac_ns_PA17",
+      "name": "PA17 (A. Vespucio Norte - Ruta 5 Norte)",
+      "reference": "Between Américo Vespucio Norte and Ruta 5 Norte interchange, Quilicura",
+      "segment": "A. Vespucio Norte - Ruta 5 Norte",
+      "segment_km": 3.0,
+      "axis": "norte_sur",
+      "lat": -33.3680,
+      "lng": -70.6780,
+      "direction_bearing": 0,
+      "rates": {
+        "cat_1": { "tbfp": 447, "tbp": 894, "ts": 1341 },
+        "cat_4": { "tbfp": 447, "tbp": 894, "ts": 1341 },
+        "cat_2": { "tbfp": 894, "tbp": 1788, "ts": 2682 },
+        "cat_3": { "tbfp": 1341, "tbp": 2682, "ts": 4023 }
+      }
+    },
+    {
+      "id": "ac_ns_PA18",
+      "name": "PA18 (Northern section, near Quilicura)",
+      "reference": "Northern section near Quilicura, before Ruta 5 Norte interchange",
+      "segment": "A. Vespucio Norte - Ruta 5 Norte",
+      "segment_km": 3.0,
+      "axis": "norte_sur",
+      "lat": -33.3550,
+      "lng": -70.6810,
+      "direction_bearing": 0,
+      "rates": {
+        "cat_1": { "tbfp": 447, "tbp": 894, "ts": 1341 },
+        "cat_4": { "tbfp": 447, "tbp": 894, "ts": 1341 },
+        "cat_2": { "tbfp": 894, "tbp": 1788, "ts": 2682 },
+        "cat_3": { "tbfp": 1341, "tbp": 2682, "ts": 4023 }
+      }
+    },
+    {
+      "_comment": "=== Additional N-S portals (direction-specific or supplementary gantries) ==="
+    },
+    {
+      "id": "ac_ns_PA9",
+      "name": "PA9 (A. Vespucio area, northbound)",
+      "reference": "Near Américo Vespucio Sur interchange, northbound",
+      "segment": "Las Acacias - A. Vespucio",
+      "segment_km": 3.0,
+      "axis": "norte_sur",
+      "lat": -33.5350,
+      "lng": -70.6700,
+      "direction_bearing": 0,
+      "rates": {
+        "cat_1": { "tbfp": 324, "tbp": 647, "ts": 971 },
+        "cat_4": { "tbfp": 324, "tbp": 647, "ts": 971 },
+        "cat_2": { "tbfp": 647, "tbp": 1294, "ts": 1941 },
+        "cat_3": { "tbfp": 971, "tbp": 1941, "ts": 2912 }
+      }
+    },
+    {
+      "id": "ac_ns_PA11",
+      "name": "PA11 (Departamental area, southbound)",
+      "reference": "Near Departamental, southbound direction",
+      "segment": "Departamental - Carlos Valdovinos",
+      "segment_km": 2.8,
+      "axis": "norte_sur",
+      "lat": -33.5000,
+      "lng": -70.6640,
       "direction_bearing": 180,
       "rates": {
-        "cat_1": { "tbfp": 160, "tbp": 320, "ts": 480 },
-        "cat_4": { "tbfp": 320, "tbp": 640, "ts": 960 },
-        "cat_2": { "tbfp": 640, "tbp": 1280, "ts": 1920 },
-        "cat_3": { "tbfp": 960, "tbp": 1920, "ts": 2880 }
+        "cat_1": { "tbfp": 380, "tbp": 760, "ts": 1139 },
+        "cat_4": { "tbfp": 380, "tbp": 760, "ts": 1139 },
+        "cat_2": { "tbfp": 760, "tbp": 1519, "ts": 2279 },
+        "cat_3": { "tbfp": 1139, "tbp": 2279, "ts": 3418 }
       }
     },
     {
-      "id": "ac_pd1",
-      "name": "PD1 - San Joaquín",
-      "lat": -33.5030,
-      "lng": -70.6550,
+      "id": "ac_ns_PA12",
+      "name": "PA12 (Carlos Valdovinos area, southbound)",
+      "reference": "Near Carlos Valdovinos, southbound direction",
+      "segment": "Carlos Valdovinos - Alameda",
+      "segment_km": 2.0,
+      "axis": "norte_sur",
+      "lat": -33.4760,
+      "lng": -70.6625,
       "direction_bearing": 180,
       "rates": {
-        "cat_1": { "tbfp": 150, "tbp": 300, "ts": 450 },
-        "cat_4": { "tbfp": 300, "tbp": 600, "ts": 900 },
-        "cat_2": { "tbfp": 600, "tbp": 1200, "ts": 1800 },
-        "cat_3": { "tbfp": 900, "tbp": 1800, "ts": 2700 }
+        "cat_1": { "tbfp": 276, "tbp": 553, "ts": 829 },
+        "cat_4": { "tbfp": 276, "tbp": 553, "ts": 829 },
+        "cat_2": { "tbfp": 553, "tbp": 1105, "ts": 1658 },
+        "cat_3": { "tbfp": 829, "tbp": 1658, "ts": 2487 }
       }
     },
     {
-      "id": "ac_pd2",
-      "name": "PD2 - La Cisterna",
-      "lat": -33.5330,
-      "lng": -70.6560,
+      "id": "ac_ns_PA14",
+      "name": "PA14 (Alameda area, southbound)",
+      "reference": "Near Alameda, southbound direction",
+      "segment": "Alameda - Río Mapocho",
+      "segment_km": 2.5,
+      "axis": "norte_sur",
+      "lat": -33.4530,
+      "lng": -70.6590,
       "direction_bearing": 180,
       "rates": {
-        "cat_1": { "tbfp": 150, "tbp": 300, "ts": 450 },
-        "cat_4": { "tbfp": 300, "tbp": 600, "ts": 900 },
-        "cat_2": { "tbfp": 600, "tbp": 1200, "ts": 1800 },
-        "cat_3": { "tbfp": 900, "tbp": 1800, "ts": 2700 }
+        "cat_1": { "tbfp": 357, "tbp": 713, "ts": 1070 },
+        "cat_4": { "tbfp": 357, "tbp": 713, "ts": 1070 },
+        "cat_2": { "tbfp": 713, "tbp": 1427, "ts": 2140 },
+        "cat_3": { "tbfp": 1070, "tbp": 2140, "ts": 3210 }
       }
     },
     {
-      "id": "ac_n_pa1",
-      "name": "PA1 Norte - Quilicura",
-      "lat": -33.3536,
-      "lng": -70.6808,
-      "direction_bearing": 0,
+      "id": "ac_ns_PA15",
+      "name": "PA15 (Río Mapocho area, southbound)",
+      "reference": "Near Río Mapocho crossing, southbound direction",
+      "segment": "Río Mapocho - 14 de la Fama",
+      "segment_km": 3.5,
+      "axis": "norte_sur",
+      "lat": -33.4280,
+      "lng": -70.6640,
+      "direction_bearing": 180,
       "rates": {
-        "cat_1": { "tbfp": 207, "tbp": 414, "ts": 621 },
-        "cat_4": { "tbfp": 414, "tbp": 828, "ts": 1242 },
-        "cat_2": { "tbfp": 828, "tbp": 1656, "ts": 2484 },
-        "cat_3": { "tbfp": 1242, "tbp": 2484, "ts": 3726 }
+        "cat_1": { "tbfp": 176, "tbp": 352, "ts": 527 },
+        "cat_4": { "tbfp": 176, "tbp": 352, "ts": 527 },
+        "cat_2": { "tbfp": 352, "tbp": 703, "ts": 1055 },
+        "cat_3": { "tbfp": 527, "tbp": 1055, "ts": 1582 }
       }
     },
     {
-      "id": "ac_n_pb1",
-      "name": "PB1 Norte - Independencia",
-      "lat": -33.4095,
-      "lng": -70.6690,
-      "direction_bearing": 0,
+      "_comment": "=== EJE GENERAL VELASQUEZ: Portals PA19-PA29 ==="
+    },
+    {
+      "id": "ac_gv_PA19",
+      "name": "PA19 (Ruta 5 Norte junction)",
+      "reference": "Northern end of Eje Gral. Velásquez, junction with Ruta 5 Norte, Quilicura/Renca",
+      "segment": "Ruta 5 Norte - Río Mapocho",
+      "segment_km": 3.97,
+      "axis": "general_velasquez",
+      "lat": -33.3830,
+      "lng": -70.6950,
+      "direction_bearing": 180,
       "rates": {
-        "cat_1": { "tbfp": 175, "tbp": 350, "ts": 525 },
-        "cat_4": { "tbfp": 350, "tbp": 700, "ts": 1050 },
-        "cat_2": { "tbfp": 700, "tbp": 1400, "ts": 2100 },
-        "cat_3": { "tbfp": 1050, "tbp": 2100, "ts": 3150 }
+        "cat_1": { "tbfp": 399, "tbp": 798, "ts": 1197 },
+        "cat_4": { "tbfp": 399, "tbp": 798, "ts": 1197 },
+        "cat_2": { "tbfp": 598, "tbp": 1197, "ts": 1795 },
+        "cat_3": { "tbfp": 798, "tbp": 1595, "ts": 2393 }
       }
     },
     {
-      "id": "ac_n_pc1",
-      "name": "PC1 Norte - Alameda",
-      "lat": -33.4520,
-      "lng": -70.6620,
-      "direction_bearing": 0,
+      "id": "ac_gv_PA28",
+      "name": "PA28 (Renca area)",
+      "reference": "Renca area, along General Velásquez, heading south",
+      "segment": "Ruta 5 Norte - Río Mapocho",
+      "segment_km": 3.97,
+      "axis": "general_velasquez",
+      "lat": -33.3980,
+      "lng": -70.6970,
+      "direction_bearing": 180,
       "rates": {
-        "cat_1": { "tbfp": 160, "tbp": 320, "ts": 480 },
-        "cat_4": { "tbfp": 320, "tbp": 640, "ts": 960 },
-        "cat_2": { "tbfp": 640, "tbp": 1280, "ts": 1920 },
-        "cat_3": { "tbfp": 960, "tbp": 1920, "ts": 2880 }
+        "cat_1": { "tbfp": 399, "tbp": 798, "ts": 1197 },
+        "cat_4": { "tbfp": 399, "tbp": 798, "ts": 1197 },
+        "cat_2": { "tbfp": 598, "tbp": 1197, "ts": 1795 },
+        "cat_3": { "tbfp": 798, "tbp": 1595, "ts": 2393 }
       }
     },
     {
-      "id": "ac_n_pd1",
-      "name": "PD1 Norte - San Joaquín",
-      "lat": -33.5030,
-      "lng": -70.6550,
+      "id": "ac_gv_PA25",
+      "name": "PA25 (Río Mapocho - Alameda)",
+      "reference": "Between Río Mapocho and Alameda on Gral. Velásquez, Estación Central / Quinta Normal",
+      "segment": "Río Mapocho - Alameda",
+      "segment_km": 2.77,
+      "axis": "general_velasquez",
+      "lat": -33.4350,
+      "lng": -70.6870,
+      "direction_bearing": 180,
+      "rates": {
+        "cat_1": { "tbfp": 278, "tbp": 557, "ts": 835 },
+        "cat_4": { "tbfp": 278, "tbp": 557, "ts": 835 },
+        "cat_2": { "tbfp": 557, "tbp": 1113, "ts": 1670 },
+        "cat_3": { "tbfp": 835, "tbp": 1670, "ts": 2505 }
+      }
+    },
+    {
+      "id": "ac_gv_PA23",
+      "name": "PA23 (Alameda - Carlos Valdovinos)",
+      "reference": "Between Alameda and Carlos Valdovinos on Gral. Velásquez, Estación Central / PAC",
+      "segment": "Alameda - Carlos Valdovinos",
+      "segment_km": 2.77,
+      "axis": "general_velasquez",
+      "lat": -33.4600,
+      "lng": -70.6850,
+      "direction_bearing": 180,
+      "rates": {
+        "cat_1": { "tbfp": 278, "tbp": 557, "ts": 835 },
+        "cat_4": { "tbfp": 278, "tbp": 557, "ts": 835 },
+        "cat_2": { "tbfp": 557, "tbp": 1113, "ts": 1670 },
+        "cat_3": { "tbfp": 835, "tbp": 1670, "ts": 2505 }
+      }
+    },
+    {
+      "id": "ac_gv_PA26",
+      "name": "PA26 (Carlos Valdovinos - A. Vespucio)",
+      "reference": "Between Carlos Valdovinos and A. Vespucio on Gral. Velásquez, Cerrillos",
+      "segment": "Carlos Valdovinos - A. Vespucio",
+      "segment_km": 4.06,
+      "axis": "general_velasquez",
+      "lat": -33.4900,
+      "lng": -70.6830,
+      "direction_bearing": 180,
+      "rates": {
+        "cat_1": { "tbfp": 408, "tbp": 816, "ts": 1224 },
+        "cat_4": { "tbfp": 408, "tbp": 816, "ts": 1224 },
+        "cat_2": { "tbfp": 816, "tbp": 1631, "ts": 2447 },
+        "cat_3": { "tbfp": 1224, "tbp": 2447, "ts": 3671 }
+      }
+    },
+    {
+      "id": "ac_gv_PA21",
+      "name": "PA21 (Carlos Valdovinos - A. Vespucio)",
+      "reference": "Near A. Vespucio on Gral. Velásquez, Cerrillos. Confirmed on Waze as PA22/PA21.",
+      "segment": "Carlos Valdovinos - A. Vespucio",
+      "segment_km": 4.06,
+      "axis": "general_velasquez",
+      "lat": -33.5050,
+      "lng": -70.6820,
+      "direction_bearing": 180,
+      "rates": {
+        "cat_1": { "tbfp": 408, "tbp": 816, "ts": 1224 },
+        "cat_4": { "tbfp": 408, "tbp": 816, "ts": 1224 },
+        "cat_2": { "tbfp": 816, "tbp": 1631, "ts": 2447 },
+        "cat_3": { "tbfp": 1224, "tbp": 2447, "ts": 3671 }
+      }
+    },
+    {
+      "id": "ac_gv_PA29",
+      "name": "PA29 (A. Vespucio - Las Acacias)",
+      "reference": "Between A. Vespucio and Las Acacias on Gral. Velásquez, southern end",
+      "segment": "A. Vespucio - Las Acacias",
+      "segment_km": 4.93,
+      "axis": "general_velasquez",
+      "lat": -33.5300,
+      "lng": -70.6810,
+      "direction_bearing": 180,
+      "rates": {
+        "cat_1": { "tbfp": 495, "tbp": 991, "ts": 1486 },
+        "cat_4": { "tbfp": 495, "tbp": 991, "ts": 1486 },
+        "cat_2": { "tbfp": 743, "tbp": 1486, "ts": 2229 },
+        "cat_3": { "tbfp": 991, "tbp": 1981, "ts": 2972 }
+      }
+    },
+    {
+      "id": "ac_gv_PA20",
+      "name": "PA20 (A. Vespucio - Las Acacias, northbound)",
+      "reference": "Between A. Vespucio and Las Acacias on Gral. Velásquez, northbound gantry",
+      "segment": "A. Vespucio - Las Acacias",
+      "segment_km": 4.93,
+      "axis": "general_velasquez",
+      "lat": -33.5350,
+      "lng": -70.6810,
       "direction_bearing": 0,
       "rates": {
-        "cat_1": { "tbfp": 150, "tbp": 300, "ts": 450 },
-        "cat_4": { "tbfp": 300, "tbp": 600, "ts": 900 },
-        "cat_2": { "tbfp": 600, "tbp": 1200, "ts": 1800 },
-        "cat_3": { "tbfp": 900, "tbp": 1800, "ts": 2700 }
+        "cat_1": { "tbfp": 495, "tbp": 991, "ts": 1486 },
+        "cat_4": { "tbfp": 495, "tbp": 991, "ts": 1486 },
+        "cat_2": { "tbfp": 743, "tbp": 1486, "ts": 2229 },
+        "cat_3": { "tbfp": 991, "tbp": 1981, "ts": 2972 }
+      }
+    },
+    {
+      "id": "ac_gv_PA22",
+      "name": "PA22 (Carlos Valdovinos - A. Vespucio, northbound)",
+      "reference": "Near A. Vespucio on Gral. Velásquez, Cerrillos, northbound",
+      "segment": "Carlos Valdovinos - A. Vespucio",
+      "segment_km": 4.06,
+      "axis": "general_velasquez",
+      "lat": -33.5080,
+      "lng": -70.6820,
+      "direction_bearing": 0,
+      "rates": {
+        "cat_1": { "tbfp": 408, "tbp": 816, "ts": 1224 },
+        "cat_4": { "tbfp": 408, "tbp": 816, "ts": 1224 },
+        "cat_2": { "tbfp": 816, "tbp": 1631, "ts": 2447 },
+        "cat_3": { "tbfp": 1224, "tbp": 2447, "ts": 3671 }
+      }
+    },
+    {
+      "id": "ac_gv_PA24",
+      "name": "PA24 (Alameda - Carlos Valdovinos, northbound)",
+      "reference": "Between Alameda and Carlos Valdovinos on Gral. Velásquez, northbound",
+      "segment": "Alameda - Carlos Valdovinos",
+      "segment_km": 2.77,
+      "axis": "general_velasquez",
+      "lat": -33.4650,
+      "lng": -70.6850,
+      "direction_bearing": 0,
+      "rates": {
+        "cat_1": { "tbfp": 278, "tbp": 557, "ts": 835 },
+        "cat_4": { "tbfp": 278, "tbp": 557, "ts": 835 },
+        "cat_2": { "tbfp": 557, "tbp": 1113, "ts": 1670 },
+        "cat_3": { "tbfp": 835, "tbp": 1670, "ts": 2505 }
       }
     }
   ]

@@ -31,23 +31,26 @@ def test_time_band_sunday():
 
 
 def test_find_portals_on_autopista_central_route():
-    """Simulate a route going south on Autopista Central."""
-    # Roughly along Ruta 5 from north to south through Santiago
+    """Simulate a route going north on Autopista Central (Eje Norte-Sur).
+
+    Route: from Alameda area northward through central Santiago toward Quilicura.
+    Should cross northbound portals PA10, PA31, PA13, PA16, PA17, PA18.
+    """
     route_points = [
-        (-33.350, -70.681),  # North of Quilicura
-        (-33.354, -70.681),  # Near PA1
-        (-33.365, -70.679),
-        (-33.380, -70.677),  # Near PA2
-        (-33.395, -70.673),
-        (-33.410, -70.669),  # Near PB1
-        (-33.425, -70.665),
-        (-33.437, -70.660),  # Near PB2
-        (-33.450, -70.662),
-        (-33.452, -70.662),  # Near PC1
+        (-33.475, -70.662),   # South of Alameda
+        (-33.472, -70.662),   # Near PA10 (Carlos Valdovinos - Alameda)
+        (-33.460, -70.661),
+        (-33.448, -70.658),   # Near PA31 (Alameda - Río Mapocho)
+        (-33.435, -70.660),
+        (-33.425, -70.663),   # Near PA13 (Río Mapocho - 14 de la Fama)
+        (-33.410, -70.667),
+        (-33.395, -70.670),   # Near PA16 (14 de la Fama - A. Vespucio Norte)
+        (-33.380, -70.674),
+        (-33.368, -70.678),   # Near PA17 (A. Vespucio Norte - Ruta 5 Norte)
+        (-33.355, -70.681),   # Near PA18 (Northern section)
     ]
     crossed = find_portals_crossed(route_points)
     assert len(crossed) > 0
-    # Should detect southbound portals
     highway_names = {p["highway"] for p in crossed}
     assert "Autopista Central" in highway_names
 

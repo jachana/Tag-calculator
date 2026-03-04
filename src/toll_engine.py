@@ -55,6 +55,9 @@ def find_portals_crossed(
     all_portals = []
     for hw in highways:
         for portal in hw.get("portals", []):
+            # Skip comment-only entries (e.g. {"_comment": "..."})
+            if "id" not in portal:
+                continue
             all_portals.append({
                 "highway": hw["display_name"],
                 "highway_id": hw["highway"],
