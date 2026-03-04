@@ -60,5 +60,8 @@ async def list_highways():
         if path.name == "schedules.json":
             continue
         with open(path) as f:
-            highways.append(json.load(f))
+            hw = json.load(f)
+        # Filter out _comment entries from portals list
+        hw["portals"] = [p for p in hw.get("portals", []) if "id" in p]
+        highways.append(hw)
     return highways

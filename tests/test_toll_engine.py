@@ -3,7 +3,7 @@
 from datetime import datetime
 
 from src.models import VehicleCategory
-from src.toll_calculator import calculate_toll, _get_time_band
+from src.toll_calculator import calculate_toll, _get_time_band, _is_holiday
 from src.toll_engine import find_portals_crossed, _haversine_m
 from src.models import TimeBand
 
@@ -16,8 +16,18 @@ def test_haversine_known_distance():
 
 
 def test_time_band_weekday_peak():
-    dt = datetime(2026, 3, 4, 8, 0)  # Wednesday 8am
+    dt = datetime(2026, 3, 4, 7, 30)  # Wednesday 7:30am -> TBP
     assert _get_time_band(dt) == TimeBand.TBP
+
+
+def test_time_band_weekday_saturation_morning():
+    dt = datetime(2026, 3, 4, 8, 30)  # Wednesday 8:30am -> TS
+    assert _get_time_band(dt) == TimeBand.TS
+
+
+def test_time_band_weekday_saturation_evening():
+    dt = datetime(2026, 3, 4, 18, 30)  # Wednesday 6:30pm -> TS
+    assert _get_time_band(dt) == TimeBand.TS
 
 
 def test_time_band_weekday_offpeak():
@@ -27,6 +37,23 @@ def test_time_band_weekday_offpeak():
 
 def test_time_band_sunday():
     dt = datetime(2026, 3, 8, 8, 0)  # Sunday 8am
+    assert _get_time_band(dt) == TimeBand.TBFP
+
+
+def test_time_band_holiday():
+    """Fiestas Patrias (Sep 18) should be off-peak even on a weekday."""
+    dt = datetime(2026, 9, 18, 8, 30)  # Friday 8:30am but holiday
+    assert _is_holiday(dt)
+    assert _get_time_band(dt) == TimeBand.TBFP
+
+
+def test_time_band_saturday_peak():
+    dt = datetime(2026, 3, 7, 12, 0)  # Saturday noon
+    assert _get_time_band(dt) == TimeBand.TBP
+
+
+def test_time_band_saturday_offpeak():
+    dt = datetime(2026, 3, 7, 8, 0)  # Saturday 8am
     assert _get_time_band(dt) == TimeBand.TBFP
 
 
@@ -96,6 +123,22 @@ def test_calculate_toll_peak():
             "rates": {"cat_4": {"tbfp": 300, "tbp": 600, "ts": 900}},
         },
     ]
-    dt = datetime(2026, 3, 4, 8, 0)  # Peak
+    dt = datetime(2026, 3, 4, 7, 30)  # Peak (TBP)
     result = calculate_toll(portals, dt, VehicleCategory.CAT_4)
     assert result.total_clp == 600
+
+
+def test_calculate_toll_saturation():
+    portals = [
+        {
+            "highway": "Test",
+            "portal_id": "t1",
+            "portal_name": "T1",
+            "lat": -33.40,
+            "lng": -70.66,
+            "rates": {"cat_4": {"tbfp": 300, "tbp": 600, "ts": 900}},
+        },
+    ]
+    dt = datetime(2026, 3, 4, 8, 30)  # Saturation (TS)
+    result = calculate_toll(portals, dt, VehicleCategory.CAT_4)
+    assert result.total_clp == 900

@@ -32,7 +32,7 @@ async function loadPortals() {
         const highways = await resp.json();
 
         highways.forEach(hw => {
-            (hw.portals || []).forEach(portal => {
+            (hw.portals || []).filter(p => p.id && p.lat != null).forEach(portal => {
                 const marker = L.circleMarker([portal.lat, portal.lng], {
                     radius: 5,
                     fillColor: "#6c757d",

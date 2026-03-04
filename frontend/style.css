@@ -207,3 +207,20 @@ h1 {
     width: 14px;
     height: 14px;
 }
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    #app {
+        flex-direction: column;
+    }
+    #sidebar {
+        width: 100%;
+        min-width: unset;
+        max-height: 50vh;
+        border-right: none;
+        border-bottom: 1px solid #dee2e6;
+    }
+    #map {
+        min-height: 50vh;
+    }
+}
