@@ -1,0 +1,35 @@
+{
+  "highway": "tunel_san_cristobal",
+  "display_name": "Túnel San Cristóbal",
+  "operator": "Sociedad Concesionaria Túnel San Cristóbal S.A.",
+  "tolling_type": "fixed",
+  "year": 2026,
+  "portals": [
+    {
+      "id": "tsc_south",
+      "name": "Túnel San Cristóbal - Entrada Sur",
+      "lat": -33.4220,
+      "lng": -70.6260,
+      "direction_bearing": 0,
+      "rates": {
+        "cat_1": { "tbfp": 650, "tbp": 1300, "ts": 1950 },
+        "cat_4": { "tbfp": 1300, "tbp": 2600, "ts": 3900 },
+        "cat_2": { "tbfp": 2600, "tbp": 5200, "ts": 7800 },
+        "cat_3": { "tbfp": 3900, "tbp": 7800, "ts": 11700 }
+      }
+    },
+    {
+      "id": "tsc_north",
+      "name": "Túnel San Cristóbal - Entrada Norte",
+      "lat": -33.4090,
+      "lng": -70.6240,
+      "direction_bearing": 180,
+      "rates": {
+        "cat_1": { "tbfp": 650, "tbp": 1300, "ts": 1950 },
+        "cat_4": { "tbfp": 1300, "tbp": 2600, "ts": 3900 },
+        "cat_2": { "tbfp": 2600, "tbp": 5200, "ts": 7800 },
+        "cat_3": { "tbfp": 3900, "tbp": 7800, "ts": 11700 }
+      }
+    }
+  ]
+}

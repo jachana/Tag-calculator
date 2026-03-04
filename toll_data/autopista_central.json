@@ -1,0 +1,165 @@
+{
+  "highway": "autopista_central",
+  "display_name": "Autopista Central",
+  "operator": "Sociedad Concesionaria Autopista Central S.A.",
+  "tolling_type": "open",
+  "year": 2026,
+  "portals": [
+    {
+      "id": "ac_pa1",
+      "name": "PA1 - Quilicura",
+      "lat": -33.3536,
+      "lng": -70.6808,
+      "direction_bearing": 180,
+      "rates": {
+        "cat_1": { "tbfp": 207, "tbp": 414, "ts": 621 },
+        "cat_4": { "tbfp": 414, "tbp": 828, "ts": 1242 },
+        "cat_2": { "tbfp": 828, "tbp": 1656, "ts": 2484 },
+        "cat_3": { "tbfp": 1242, "tbp": 2484, "ts": 3726 }
+      }
+    },
+    {
+      "id": "ac_pa2",
+      "name": "PA2 - Conchalí",
+      "lat": -33.3810,
+      "lng": -70.6760,
+      "direction_bearing": 180,
+      "rates": {
+        "cat_1": { "tbfp": 207, "tbp": 414, "ts": 621 },
+        "cat_4": { "tbfp": 414, "tbp": 828, "ts": 1242 },
+        "cat_2": { "tbfp": 828, "tbp": 1656, "ts": 2484 },
+        "cat_3": { "tbfp": 1242, "tbp": 2484, "ts": 3726 }
+      }
+    },
+    {
+      "id": "ac_pb1",
+      "name": "PB1 - Independencia",
+      "lat": -33.4095,
+      "lng": -70.6690,
+      "direction_bearing": 180,
+      "rates": {
+        "cat_1": { "tbfp": 175, "tbp": 350, "ts": 525 },
+        "cat_4": { "tbfp": 350, "tbp": 700, "ts": 1050 },
+        "cat_2": { "tbfp": 700, "tbp": 1400, "ts": 2100 },
+        "cat_3": { "tbfp": 1050, "tbp": 2100, "ts": 3150 }
+      }
+    },
+    {
+      "id": "ac_pb2",
+      "name": "PB2 - Santiago Centro",
+      "lat": -33.4370,
+      "lng": -70.6600,
+      "direction_bearing": 180,
+      "rates": {
+        "cat_1": { "tbfp": 175, "tbp": 350, "ts": 525 },
+        "cat_4": { "tbfp": 350, "tbp": 700, "ts": 1050 },
+        "cat_2": { "tbfp": 700, "tbp": 1400, "ts": 2100 },
+        "cat_3": { "tbfp": 1050, "tbp": 2100, "ts": 3150 }
+      }
+    },
+    {
+      "id": "ac_pc1",
+      "name": "PC1 - Alameda",
+      "lat": -33.4520,
+      "lng": -70.6620,
+      "direction_bearing": 180,
+      "rates": {
+        "cat_1": { "tbfp": 160, "tbp": 320, "ts": 480 },
+        "cat_4": { "tbfp": 320, "tbp": 640, "ts": 960 },
+        "cat_2": { "tbfp": 640, "tbp": 1280, "ts": 1920 },
+        "cat_3": { "tbfp": 960, "tbp": 1920, "ts": 2880 }
+      }
+    },
+    {
+      "id": "ac_pc2",
+      "name": "PC2 - San Miguel",
+      "lat": -33.4880,
+      "lng": -70.6580,
+      "direction_bearing": 180,
+      "rates": {
+        "cat_1": { "tbfp": 160, "tbp": 320, "ts": 480 },
+        "cat_4": { "tbfp": 320, "tbp": 640, "ts": 960 },
+        "cat_2": { "tbfp": 640, "tbp": 1280, "ts": 1920 },
+        "cat_3": { "tbfp": 960, "tbp": 1920, "ts": 2880 }
+      }
+    },
+    {
+      "id": "ac_pd1",
+      "name": "PD1 - San Joaquín",
+      "lat": -33.5030,
+      "lng": -70.6550,
+      "direction_bearing": 180,
+      "rates": {
+        "cat_1": { "tbfp": 150, "tbp": 300, "ts": 450 },
+        "cat_4": { "tbfp": 300, "tbp": 600, "ts": 900 },
+        "cat_2": { "tbfp": 600, "tbp": 1200, "ts": 1800 },
+        "cat_3": { "tbfp": 900, "tbp": 1800, "ts": 2700 }
+      }
+    },
+    {
+      "id": "ac_pd2",
+      "name": "PD2 - La Cisterna",
+      "lat": -33.5330,
+      "lng": -70.6560,
+      "direction_bearing": 180,
+      "rates": {
+        "cat_1": { "tbfp": 150, "tbp": 300, "ts": 450 },
+        "cat_4": { "tbfp": 300, "tbp": 600, "ts": 900 },
+        "cat_2": { "tbfp": 600, "tbp": 1200, "ts": 1800 },
+        "cat_3": { "tbfp": 900, "tbp": 1800, "ts": 2700 }
+      }
+    },
+    {
+      "id": "ac_n_pa1",
+      "name": "PA1 Norte - Quilicura",
+      "lat": -33.3536,
+      "lng": -70.6808,
+      "direction_bearing": 0,
+      "rates": {
+        "cat_1": { "tbfp": 207, "tbp": 414, "ts": 621 },
+        "cat_4": { "tbfp": 414, "tbp": 828, "ts": 1242 },
+        "cat_2": { "tbfp": 828, "tbp": 1656, "ts": 2484 },
+        "cat_3": { "tbfp": 1242, "tbp": 2484, "ts": 3726 }
+      }
+    },
+    {
+      "id": "ac_n_pb1",
+      "name": "PB1 Norte - Independencia",
+      "lat": -33.4095,
+      "lng": -70.6690,
+      "direction_bearing": 0,
+      "rates": {
+        "cat_1": { "tbfp": 175, "tbp": 350, "ts": 525 },
+        "cat_4": { "tbfp": 350, "tbp": 700, "ts": 1050 },
+        "cat_2": { "tbfp": 700, "tbp": 1400, "ts": 2100 },
+        "cat_3": { "tbfp": 1050, "tbp": 2100, "ts": 3150 }
+      }
+    },
+    {
+      "id": "ac_n_pc1",
+      "name": "PC1 Norte - Alameda",
+      "lat": -33.4520,
+      "lng": -70.6620,
+      "direction_bearing": 0,
+      "rates": {
+        "cat_1": { "tbfp": 160, "tbp": 320, "ts": 480 },
+        "cat_4": { "tbfp": 320, "tbp": 640, "ts": 960 },
+        "cat_2": { "tbfp": 640, "tbp": 1280, "ts": 1920 },
+        "cat_3": { "tbfp": 960, "tbp": 1920, "ts": 2880 }
+      }
+    },
+    {
+      "id": "ac_n_pd1",
+      "name": "PD1 Norte - San Joaquín",
+      "lat": -33.5030,
+      "lng": -70.6550,
+      "direction_bearing": 0,
+      "rates": {
+        "cat_1": { "tbfp": 150, "tbp": 300, "ts": 450 },
+        "cat_4": { "tbfp": 300, "tbp": 600, "ts": 900 },
+        "cat_2": { "tbfp": 600, "tbp": 1200, "ts": 1800 },
+        "cat_3": { "tbfp": 900, "tbp": 1800, "ts": 2700 }
+      }
+    }
+  ]
+}

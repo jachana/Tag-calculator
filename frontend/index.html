@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Santiago TAG Calculator</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div id="app">
+        <div id="sidebar">
+            <h1>🛣️ TAG Calculator</h1>
+            <p class="subtitle">Estimador de peajes en Santiago</p>
+
+            <div class="form-group">
+                <label for="origin">Origen</label>
+                <input type="text" id="origin" placeholder="Ej: Mall Plaza Vespucio, La Florida" />
+            </div>
+
+            <div class="form-group">
+                <label for="destination">Destino</label>
+                <input type="text" id="destination" placeholder="Ej: Aeropuerto Santiago" />
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="departure">Hora de salida</label>
+                    <input type="datetime-local" id="departure" />
+                </div>
+                <div class="form-group">
+                    <label for="vehicle">Vehículo</label>
+                    <select id="vehicle">
+                        <option value="cat_4" selected>Auto / Camioneta</option>
+                        <option value="cat_1">Moto</option>
+                        <option value="cat_2">Bus / Camión</option>
+                        <option value="cat_3">Camión c/ remolque</option>
+                    </select>
+                </div>
+            </div>
+
+            <button id="calculate-btn" onclick="calculateToll()">Calcular Peaje</button>
+
+            <div id="results" class="hidden">
+                <div id="summary">
+                    <div class="total-box">
+                        <span class="total-label">Total estimado TAG</span>
+                        <span class="total-amount" id="total-amount">$0</span>
+                    </div>
+                    <div class="route-info">
+                        <span id="route-distance">0 km</span> · <span id="route-duration">0 min</span>
+                    </div>
+                </div>
+
+                <div id="breakdown">
+                    <h3>Detalle por pórtico</h3>
+                    <table id="breakdown-table">
+                        <thead>
+                            <tr>
+                                <th>Autopista</th>
+                                <th>Pórtico</th>
+                                <th>Horario</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody id="breakdown-body"></tbody>
+                    </table>
+                </div>
+
+                <div id="no-tolls" class="hidden">
+                    <p>✅ Esta ruta no pasa por autopistas con TAG.</p>
+                </div>
+            </div>
+
+            <div id="error" class="hidden"></div>
+
+            <div class="tip">
+                <strong>Tip:</strong> También puedes hacer clic en el mapa para fijar origen (1er clic) y destino (2do clic).
+            </div>
+        </div>
+
+        <div id="map"></div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

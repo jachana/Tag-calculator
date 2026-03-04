@@ -1,0 +1,152 @@
+{
+  "highway": "costanera_norte",
+  "display_name": "Costanera Norte",
+  "operator": "Sociedad Concesionaria Costanera Norte S.A.",
+  "tolling_type": "open",
+  "year": 2026,
+  "portals": [
+    {
+      "id": "cn_p1_e",
+      "name": "P1 - Lo Barnechea (East)",
+      "lat": -33.3990,
+      "lng": -70.5280,
+      "direction_bearing": 270,
+      "rates": {
+        "cat_1": { "tbfp": 140, "tbp": 280, "ts": 420 },
+        "cat_4": { "tbfp": 280, "tbp": 560, "ts": 840 },
+        "cat_2": { "tbfp": 560, "tbp": 1120, "ts": 1680 },
+        "cat_3": { "tbfp": 840, "tbp": 1680, "ts": 2520 }
+      }
+    },
+    {
+      "id": "cn_p2_e",
+      "name": "P2 - Las Condes (East)",
+      "lat": -33.4105,
+      "lng": -70.5680,
+      "direction_bearing": 270,
+      "rates": {
+        "cat_1": { "tbfp": 200, "tbp": 400, "ts": 600 },
+        "cat_4": { "tbfp": 400, "tbp": 800, "ts": 1200 },
+        "cat_2": { "tbfp": 800, "tbp": 1600, "ts": 2400 },
+        "cat_3": { "tbfp": 1200, "tbp": 2400, "ts": 3600 }
+      }
+    },
+    {
+      "id": "cn_p3_e",
+      "name": "P3 - Providencia (East)",
+      "lat": -33.4185,
+      "lng": -70.5990,
+      "direction_bearing": 270,
+      "rates": {
+        "cat_1": { "tbfp": 175, "tbp": 350, "ts": 525 },
+        "cat_4": { "tbfp": 350, "tbp": 700, "ts": 1050 },
+        "cat_2": { "tbfp": 700, "tbp": 1400, "ts": 2100 },
+        "cat_3": { "tbfp": 1050, "tbp": 2100, "ts": 3150 }
+      }
+    },
+    {
+      "id": "cn_p4",
+      "name": "P4 - Río Mapocho Centro",
+      "lat": -33.4285,
+      "lng": -70.6430,
+      "direction_bearing": 270,
+      "rates": {
+        "cat_1": { "tbfp": 150, "tbp": 300, "ts": 450 },
+        "cat_4": { "tbfp": 300, "tbp": 600, "ts": 900 },
+        "cat_2": { "tbfp": 600, "tbp": 1200, "ts": 1800 },
+        "cat_3": { "tbfp": 900, "tbp": 1800, "ts": 2700 }
+      }
+    },
+    {
+      "id": "cn_p5",
+      "name": "P5 - Quinta Normal",
+      "lat": -33.4310,
+      "lng": -70.6920,
+      "direction_bearing": 270,
+      "rates": {
+        "cat_1": { "tbfp": 130, "tbp": 260, "ts": 390 },
+        "cat_4": { "tbfp": 260, "tbp": 520, "ts": 780 },
+        "cat_2": { "tbfp": 520, "tbp": 1040, "ts": 1560 },
+        "cat_3": { "tbfp": 780, "tbp": 1560, "ts": 2340 }
+      }
+    },
+    {
+      "id": "cn_p6",
+      "name": "P6 - Ruta 68",
+      "lat": -33.4290,
+      "lng": -70.7350,
+      "direction_bearing": 270,
+      "rates": {
+        "cat_1": { "tbfp": 200, "tbp": 400, "ts": 600 },
+        "cat_4": { "tbfp": 400, "tbp": 800, "ts": 1200 },
+        "cat_2": { "tbfp": 800, "tbp": 1600, "ts": 2400 },
+        "cat_3": { "tbfp": 1200, "tbp": 2400, "ts": 3600 }
+      }
+    },
+    {
+      "id": "cn_p1_w",
+      "name": "P1 - Ruta 68 (West)",
+      "lat": -33.4290,
+      "lng": -70.7350,
+      "direction_bearing": 90,
+      "rates": {
+        "cat_1": { "tbfp": 200, "tbp": 400, "ts": 600 },
+        "cat_4": { "tbfp": 400, "tbp": 800, "ts": 1200 },
+        "cat_2": { "tbfp": 800, "tbp": 1600, "ts": 2400 },
+        "cat_3": { "tbfp": 1200, "tbp": 2400, "ts": 3600 }
+      }
+    },
+    {
+      "id": "cn_p2_w",
+      "name": "P2 - Quinta Normal (West)",
+      "lat": -33.4310,
+      "lng": -70.6920,
+      "direction_bearing": 90,
+      "rates": {
+        "cat_1": { "tbfp": 130, "tbp": 260, "ts": 390 },
+        "cat_4": { "tbfp": 260, "tbp": 520, "ts": 780 },
+        "cat_2": { "tbfp": 520, "tbp": 1040, "ts": 1560 },
+        "cat_3": { "tbfp": 780, "tbp": 1560, "ts": 2340 }
+      }
+    },
+    {
+      "id": "cn_p3_w",
+      "name": "P3 - Centro (West)",
+      "lat": -33.4285,
+      "lng": -70.6430,
+      "direction_bearing": 90,
+      "rates": {
+        "cat_1": { "tbfp": 150, "tbp": 300, "ts": 450 },
+        "cat_4": { "tbfp": 300, "tbp": 600, "ts": 900 },
+        "cat_2": { "tbfp": 600, "tbp": 1200, "ts": 1800 },
+        "cat_3": { "tbfp": 900, "tbp": 1800, "ts": 2700 }
+      }
+    },
+    {
+      "id": "cn_p4_w",
+      "name": "P4 - Providencia (West)",
+      "lat": -33.4185,
+      "lng": -70.5990,
+      "direction_bearing": 90,
+      "rates": {
+        "cat_1": { "tbfp": 175, "tbp": 350, "ts": 525 },
+        "cat_4": { "tbfp": 350, "tbp": 700, "ts": 1050 },
+        "cat_2": { "tbfp": 700, "tbp": 1400, "ts": 2100 },
+        "cat_3": { "tbfp": 1050, "tbp": 2100, "ts": 3150 }
+      }
+    },
+    {
+      "id": "cn_p5_w",
+      "name": "P5 - Las Condes (West)",
+      "lat": -33.4105,
+      "lng": -70.5680,
+      "direction_bearing": 90,
+      "rates": {
+        "cat_1": { "tbfp": 200, "tbp": 400, "ts": 600 },
+        "cat_4": { "tbfp": 400, "tbp": 800, "ts": 1200 },
+        "cat_2": { "tbfp": 800, "tbp": 1600, "ts": 2400 },
+        "cat_3": { "tbfp": 1200, "tbp": 2400, "ts": 3600 }
+      }
+    }
+  ]
+}

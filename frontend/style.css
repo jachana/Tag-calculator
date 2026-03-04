@@ -1,0 +1,209 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #1a1a2e;
+}
+
+#app {
+    display: flex;
+    height: 100vh;
+}
+
+#sidebar {
+    width: 400px;
+    min-width: 400px;
+    padding: 24px;
+    overflow-y: auto;
+    background: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+}
+
+#map {
+    flex: 1;
+}
+
+h1 {
+    font-size: 1.5rem;
+    margin-bottom: 4px;
+}
+
+.subtitle {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #495057;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #4361ee;
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+}
+
+.form-row {
+    display: flex;
+    gap: 12px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+#calculate-btn {
+    width: 100%;
+    padding: 12px;
+    background: #4361ee;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.2s;
+}
+
+#calculate-btn:hover {
+    background: #3a56d4;
+}
+
+#calculate-btn:disabled {
+    background: #adb5bd;
+    cursor: not-allowed;
+}
+
+#results {
+    margin-top: 20px;
+}
+
+.total-box {
+    background: linear-gradient(135deg, #4361ee, #3a0ca3);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.total-label {
+    display: block;
+    font-size: 0.85rem;
+    opacity: 0.85;
+    margin-bottom: 4px;
+}
+
+.total-amount {
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+.route-info {
+    text-align: center;
+    color: #6c757d;
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+}
+
+#breakdown h3 {
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+}
+
+#breakdown-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+}
+
+#breakdown-table th {
+    background: #e9ecef;
+    padding: 6px 8px;
+    text-align: left;
+    font-weight: 600;
+}
+
+#breakdown-table td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+#breakdown-table tr:last-child td {
+    border-bottom: none;
+}
+
+.band-tbfp { color: #2d6a4f; }
+.band-tbp { color: #e76f51; }
+.band-ts { color: #d62828; font-weight: 600; }
+
+#no-tolls {
+    background: #d4edda;
+    padding: 16px;
+    border-radius: 8px;
+    text-align: center;
+    margin-top: 12px;
+}
+
+#error {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 16px;
+    font-size: 0.85rem;
+}
+
+.tip {
+    margin-top: 20px;
+    padding: 12px;
+    background: #fff3cd;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: #856404;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Portal markers on map */
+.portal-marker {
+    background: #6c757d;
+    border: 2px solid white;
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.portal-marker.crossed {
+    background: #e63946;
+    width: 14px;
+    height: 14px;
+}

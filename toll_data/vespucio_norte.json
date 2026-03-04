@@ -1,0 +1,87 @@
+{
+  "highway": "vespucio_norte",
+  "display_name": "Vespucio Norte Express",
+  "operator": "Sociedad Concesionaria Vespucio Norte Express S.A.",
+  "tolling_type": "open",
+  "year": 2026,
+  "portals": [
+    {
+      "id": "vn_p1_e",
+      "name": "P1 - El Salto (Eastbound)",
+      "lat": -33.3980,
+      "lng": -70.6100,
+      "direction_bearing": 90,
+      "rates": {
+        "cat_1": { "tbfp": 120, "tbp": 240, "ts": 360 },
+        "cat_4": { "tbfp": 240, "tbp": 480, "ts": 720 },
+        "cat_2": { "tbfp": 480, "tbp": 960, "ts": 1440 },
+        "cat_3": { "tbfp": 720, "tbp": 1440, "ts": 2160 }
+      }
+    },
+    {
+      "id": "vn_p2_e",
+      "name": "P2 - Guanaco (Eastbound)",
+      "lat": -33.3870,
+      "lng": -70.6350,
+      "direction_bearing": 90,
+      "rates": {
+        "cat_1": { "tbfp": 110, "tbp": 220, "ts": 330 },
+        "cat_4": { "tbfp": 220, "tbp": 440, "ts": 660 },
+        "cat_2": { "tbfp": 440, "tbp": 880, "ts": 1320 },
+        "cat_3": { "tbfp": 660, "tbp": 1320, "ts": 1980 }
+      }
+    },
+    {
+      "id": "vn_p3",
+      "name": "P3 - Pedro Fontova",
+      "lat": -33.3760,
+      "lng": -70.6580,
+      "direction_bearing": 270,
+      "rates": {
+        "cat_1": { "tbfp": 130, "tbp": 260, "ts": 390 },
+        "cat_4": { "tbfp": 260, "tbp": 520, "ts": 780 },
+        "cat_2": { "tbfp": 520, "tbp": 1040, "ts": 1560 },
+        "cat_3": { "tbfp": 780, "tbp": 1560, "ts": 2340 }
+      }
+    },
+    {
+      "id": "vn_p4",
+      "name": "P4 - Ruta 5 Norte",
+      "lat": -33.3710,
+      "lng": -70.6810,
+      "direction_bearing": 270,
+      "rates": {
+        "cat_1": { "tbfp": 145, "tbp": 290, "ts": 435 },
+        "cat_4": { "tbfp": 290, "tbp": 580, "ts": 870 },
+        "cat_2": { "tbfp": 580, "tbp": 1160, "ts": 1740 },
+        "cat_3": { "tbfp": 870, "tbp": 1740, "ts": 2610 }
+      }
+    },
+    {
+      "id": "vn_p5",
+      "name": "P5 - Lo Echevers",
+      "lat": -33.3680,
+      "lng": -70.7100,
+      "direction_bearing": 270,
+      "rates": {
+        "cat_1": { "tbfp": 125, "tbp": 250, "ts": 375 },
+        "cat_4": { "tbfp": 250, "tbp": 500, "ts": 750 },
+        "cat_2": { "tbfp": 500, "tbp": 1000, "ts": 1500 },
+        "cat_3": { "tbfp": 750, "tbp": 1500, "ts": 2250 }
+      }
+    },
+    {
+      "id": "vn_p6",
+      "name": "P6 - Condell",
+      "lat": -33.3740,
+      "lng": -70.7400,
+      "direction_bearing": 270,
+      "rates": {
+        "cat_1": { "tbfp": 135, "tbp": 270, "ts": 405 },
+        "cat_4": { "tbfp": 270, "tbp": 540, "ts": 810 },
+        "cat_2": { "tbfp": 540, "tbp": 1080, "ts": 1620 },
+        "cat_3": { "tbfp": 810, "tbp": 1620, "ts": 2430 }
+      }
+    }
+  ]
+}
