@@ -149,6 +149,17 @@ function displayResults(data) {
     document.getElementById("route-distance").textContent = `${data.route.distance_km} km`;
     document.getElementById("route-duration").textContent = `${Math.round(data.route.duration_min)} min`;
 
+    // Fuel estimate
+    const fuelBox = document.getElementById("fuel-box");
+    if (data.fuel_estimate) {
+        fuelBox.classList.remove("hidden");
+        document.getElementById("fuel-amount").textContent = formatCLP(data.fuel_estimate.cost_clp);
+        document.getElementById("fuel-liters").textContent = `${data.fuel_estimate.liters} L`;
+        document.getElementById("trip-total").textContent = formatCLP(
+            data.toll_estimate.total_clp + data.fuel_estimate.cost_clp
+        );
+    }
+
     // Draw route on map
     routeLayer.clearLayers();
     const decoded = decodePolyline(data.route.polyline);

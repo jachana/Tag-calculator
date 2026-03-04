@@ -46,9 +46,18 @@ class RouteInfo(BaseModel):
     polyline: str
 
 
+class FuelEstimate(BaseModel):
+    liters: float
+    cost_clp: int
+    consumption_lper100km: float
+    price_per_liter_clp: int
+    vehicle_name: str
+
+
 class TollEstimateResponse(BaseModel):
     route: RouteInfo
     toll_estimate: TollEstimate
+    fuel_estimate: FuelEstimate
 
 
 class TollEstimate(BaseModel):

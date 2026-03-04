@@ -7,6 +7,7 @@ from datetime import datetime
 from fastapi import APIRouter, HTTPException
 
 from src.models import (
+    FuelEstimate,
     RouteInfo,
     TollEstimateRequest,
     TollEstimateResponse,
@@ -14,6 +15,11 @@ from src.models import (
 from src.route_service import geocode, get_route
 from src.toll_calculator import calculate_toll
 from src.toll_engine import find_portals_crossed
+
+# Toyota RAV4 2.0L — blended city/highway for Santiago
+RAV4_L_PER_100KM = 8.0
+# Chilean 93-octane gasoline price (CLP/liter, approximate 2026)
+GAS_PRICE_CLP_PER_LITER = 1250
 
 router = APIRouter(prefix="/api")
 
@@ -39,6 +45,9 @@ async def estimate_toll(req: TollEstimateRequest):
     portals_crossed = find_portals_crossed(points)
     toll_estimate = calculate_toll(portals_crossed, departure, req.vehicle_category)
 
+    liters = distance_km * RAV4_L_PER_100KM / 100
+    fuel_cost = round(liters * GAS_PRICE_CLP_PER_LITER)
+
     return TollEstimateResponse(
         route=RouteInfo(
             distance_km=round(distance_km, 1),
@@ -46,6 +55,13 @@ async def estimate_toll(req: TollEstimateRequest):
             polyline=encoded_polyline,
         ),
         toll_estimate=toll_estimate,
+        fuel_estimate=FuelEstimate(
+            liters=round(liters, 2),
+            cost_clp=fuel_cost,
+            consumption_lper100km=RAV4_L_PER_100KM,
+            price_per_liter_clp=GAS_PRICE_CLP_PER_LITER,
+            vehicle_name="Toyota RAV4 2.0L",
+        ),
     )
 
 
