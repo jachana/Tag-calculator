@@ -3,6 +3,7 @@
   "display_name": "Costanera Norte",
   "operator": "Sociedad Concesionaria Costanera Norte S.A.",
   "tolling_type": "open",
+  "bidirectional_gantries": true,
   "year": 2025,
   "notes": "Portal IDs and street references from official 2025/2026 tariff. GPS coordinates are approximate. 30 gantries total. Rates are 2025/2026 TBFP/TBP/TS for Cat 1&4 (CLP).",
   "axes": [

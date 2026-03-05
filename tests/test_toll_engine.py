@@ -81,6 +81,65 @@ def test_find_portals_on_autopista_central_route():
     highway_names = {p["highway"] for p in crossed}
     assert "Autopista Central" in highway_names
 
+    # All detected portals should be northbound (bearing ~0) since route goes north
+    portal_ids = {p["portal_id"] for p in crossed}
+    # Should NOT include southbound portals like PA12, PA14, PA15
+    assert "ac_ns_PA12" not in portal_ids
+    assert "ac_ns_PA14" not in portal_ids
+    assert "ac_ns_PA15" not in portal_ids
+
+
+def test_fill_between_portals():
+    """When two portals are detected, all portals between them should be included.
+
+    This is the core of the entry/exit approach: if the route enters at portal A
+    and exits at portal B, all portals between A and B are charged.
+    """
+    # Route that passes near PA10 and PA17 on Autopista Central
+    # (northbound - the points match these specific portals)
+    route_points = [
+        (-33.472, -70.662),   # PA10
+        (-33.450, -70.660),
+        (-33.430, -70.663),
+        (-33.395, -70.670),
+        (-33.368, -70.678),   # PA17
+    ]
+    crossed = find_portals_crossed(route_points)
+
+    ac_portals = [p for p in crossed if p["highway_id"] == "autopista_central"]
+    portal_ids = {p["portal_id"] for p in ac_portals}
+
+    # PA10 and PA17 are directly detected
+    assert "ac_ns_PA10" in portal_ids
+    assert "ac_ns_PA17" in portal_ids
+
+    # PA31, PA13, PA16 should be FILLED IN between PA10 and PA17
+    # (these are northbound portals between PA10 and PA17)
+    assert "ac_ns_PA31" in portal_ids
+    assert "ac_ns_PA13" in portal_ids
+    assert "ac_ns_PA16" in portal_ids
+
+
+def test_parallel_street_not_detected():
+    """A route on a street parallel to a highway should NOT trigger portal detections.
+
+    Simulates a route on Av. Santa María, which runs parallel to Costanera Norte
+    but ~100-150m away from the portal positions.
+    """
+    # Points on Av. Santa María (north bank of Mapocho), offset from CN portals
+    route_points = [
+        (-33.4260, -70.6310),  # Near Bellavista, but on surface ~100m from tunnel
+        (-33.4250, -70.6350),
+        (-33.4240, -70.6400),
+        (-33.4230, -70.6450),
+        (-33.4220, -70.6500),
+        (-33.4210, -70.6550),
+    ]
+    crossed = find_portals_crossed(route_points)
+    cn_portals = [p for p in crossed if p["highway_id"] == "costanera_norte"]
+    # Should not detect CN portals from a parallel street
+    assert len(cn_portals) == 0
+
 
 def test_calculate_toll_basic():
     """Test toll calculation with mock portal data."""

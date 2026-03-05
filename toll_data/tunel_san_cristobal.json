@@ -3,6 +3,7 @@
   "display_name": "Túnel San Cristóbal",
   "operator": "Sociedad Concesionaria Túnel San Cristóbal S.A.",
   "tolling_type": "fixed",
+  "bidirectional_gantries": true,
   "year": 2026,
   "portals": [
     {

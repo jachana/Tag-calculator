@@ -3,6 +3,7 @@
   "display_name": "Vespucio Norte Express",
   "operator": "Sociedad Concesionaria Vespucio Norte Express S.A.",
   "tolling_type": "open",
+  "bidirectional_gantries": true,
   "year": 2026,
   "portals": [
     {

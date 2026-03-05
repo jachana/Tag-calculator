@@ -3,6 +3,7 @@
   "display_name": "Vespucio Sur",
   "operator": "Sociedad Concesionaria Vespucio Sur S.A.",
   "tolling_type": "open",
+  "bidirectional_gantries": true,
   "year": 2026,
   "portals": [
     {
