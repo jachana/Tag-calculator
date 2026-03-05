@@ -5,24 +5,116 @@ const API_BASE = window.location.origin;
 const ROUTE_COLORS = ["#4361ee", "#e76f51", "#2d6a4f"];
 const ROUTE_LABELS = ["Ruta A", "Ruta B", "Ruta C"];
 
-// Initialize map centered on Santiago
+// ── History (localStorage) ──────────────────────────────────────────
+const HISTORY_KEY = "tag_calc_history";
+const MAX_HISTORY = 20;
+
+function getHistory() {
+    try { return JSON.parse(localStorage.getItem(HISTORY_KEY)) || []; }
+    catch { return []; }
+}
+
+function addToHistory(value) {
+    if (!value || value.length < 3) return;
+    let h = getHistory().filter(v => v !== value);
+    h.unshift(value);
+    if (h.length > MAX_HISTORY) h = h.slice(0, MAX_HISTORY);
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(h));
+}
+
+// ── Suggestions dropdown ────────────────────────────────────────────
+function setupSuggestions(inputId, dropdownId) {
+    const input = document.getElementById(inputId);
+    const dropdown = document.getElementById(dropdownId);
+
+    function showSuggestions() {
+        const val = input.value.toLowerCase().trim();
+        const history = getHistory();
+        const filtered = val
+            ? history.filter(h => h.toLowerCase().includes(val))
+            : history;
+
+        if (filtered.length === 0) {
+            dropdown.classList.add("hidden");
+            return;
+        }
+
+        dropdown.innerHTML = filtered.map(h => {
+            const escaped = h.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            return `<div class="suggestion-item" data-value="${escaped}">${escaped}</div>`;
+        }).join("");
+        dropdown.classList.remove("hidden");
+    }
+
+    function hideSuggestions() {
+        // Small delay so click on item registers first
+        setTimeout(() => dropdown.classList.add("hidden"), 150);
+    }
+
+    input.addEventListener("focus", showSuggestions);
+    input.addEventListener("input", showSuggestions);
+    input.addEventListener("blur", hideSuggestions);
+
+    dropdown.addEventListener("mousedown", e => {
+        const item = e.target.closest(".suggestion-item");
+        if (item) {
+            input.value = item.dataset.value;
+            dropdown.classList.add("hidden");
+            input.focus();
+        }
+    });
+}
+
+setupSuggestions("origin", "origin-suggestions");
+setupSuggestions("destination", "destination-suggestions");
+
+// ── Geolocation ─────────────────────────────────────────────────────
+document.getElementById("geolocate-btn").addEventListener("click", () => {
+    const btn = document.getElementById("geolocate-btn");
+    if (!navigator.geolocation) {
+        showError("Geolocalizacion no disponible en este navegador.");
+        return;
+    }
+    btn.classList.add("loading");
+    navigator.geolocation.getCurrentPosition(
+        pos => {
+            const coordStr = `${pos.coords.latitude.toFixed(6)},${pos.coords.longitude.toFixed(6)}`;
+            document.getElementById("origin").value = coordStr;
+            map.setView([pos.coords.latitude, pos.coords.longitude], 14);
+            btn.classList.remove("loading");
+        },
+        () => {
+            showError("No se pudo obtener tu ubicacion.");
+            btn.classList.remove("loading");
+        },
+        { enableHighAccuracy: true, timeout: 10000 }
+    );
+});
+
+// ── Swap origin / destination ───────────────────────────────────────
+document.getElementById("swap-btn").addEventListener("click", () => {
+    const originInput = document.getElementById("origin");
+    const destInput = document.getElementById("destination");
+    const tmp = originInput.value;
+    originInput.value = destInput.value;
+    destInput.value = tmp;
+});
+
+// ── Map setup ───────────────────────────────────────────────────────
 const map = L.map("map").setView([-33.45, -70.65], 12);
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     maxZoom: 18,
 }).addTo(map);
 
-// Layer groups
 let routeLayer = L.layerGroup().addTo(map);
 let portalLayer = L.layerGroup().addTo(map);
 let markerLayer = L.layerGroup().addTo(map);
 
-// Map click state
 let clickCount = 0;
 let originMarker = null;
 let destMarker = null;
 
-// Currently selected route index
 let selectedRouteIndex = 0;
 let currentData = null;
 
@@ -32,12 +124,11 @@ const now = new Date();
 now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
 departureInput.value = now.toISOString().slice(0, 16);
 
-// Load and display all portals on map
+// Load portals
 async function loadPortals() {
     try {
         const resp = await fetch(`${API_BASE}/api/highways`);
         const highways = await resp.json();
-
         highways.forEach(hw => {
             (hw.portals || []).filter(p => p.id && p.lat != null).forEach(portal => {
                 const marker = L.circleMarker([portal.lat, portal.lng], {
@@ -84,7 +175,6 @@ function formatCLP(amount) {
     return "$" + amount.toLocaleString("es-CL");
 }
 
-// Band display names
 const bandNames = {
     tbfp: "Fuera de punta",
     tbp: "Punta",
@@ -97,7 +187,7 @@ const bandClasses = {
     ts: "band-ts",
 };
 
-// Main comparison
+// ── Main comparison ─────────────────────────────────────────────────
 async function compareRoutes() {
     const origin = document.getElementById("origin").value.trim();
     const destination = document.getElementById("destination").value.trim();
@@ -108,6 +198,10 @@ async function compareRoutes() {
         showError("Ingresa origen y destino.");
         return;
     }
+
+    // Save to history
+    addToHistory(origin);
+    addToHistory(destination);
 
     const btn = document.getElementById("calculate-btn");
     btn.disabled = true;
@@ -150,7 +244,6 @@ async function compareRoutes() {
 function displayComparison(data) {
     const results = document.getElementById("results");
     results.classList.remove("hidden");
-
     const container = document.getElementById("routes-container");
 
     if (data.routes.length === 0) {
@@ -221,14 +314,10 @@ function displayComparison(data) {
 
 function selectRoute(index) {
     selectedRouteIndex = index;
-
-    // Update card selection
     document.querySelectorAll(".route-card").forEach((card, i) => {
         card.classList.toggle("selected", i === index);
         card.querySelector(".route-portals").classList.toggle("hidden", i !== index);
     });
-
-    // Update map emphasis
     drawAllRoutes(currentData);
 }
 
@@ -236,7 +325,6 @@ function drawAllRoutes(data) {
     routeLayer.clearLayers();
     markerLayer.clearLayers();
 
-    // Draw non-selected routes first (behind), then selected on top
     const order = data.routes.map((_, i) => i).sort((a, b) => {
         if (a === selectedRouteIndex) return 1;
         if (b === selectedRouteIndex) return -1;
@@ -261,7 +349,6 @@ function drawAllRoutes(data) {
         }
     });
 
-    // Highlight crossed portals for selected route
     const selected = data.routes[selectedRouteIndex];
     const crossedIds = new Set(selected.toll_estimate.portals_crossed.map(p => p.portal_id));
     portalLayer.eachLayer(marker => {
@@ -272,7 +359,6 @@ function drawAllRoutes(data) {
         }
     });
 
-    // Origin/destination markers
     if (data.routes.length > 0) {
         const first = decodePolyline(data.routes[0].route.polyline);
         if (first.length > 0) {
@@ -288,11 +374,10 @@ function drawAllRoutes(data) {
     }
 }
 
-// Decode Google/OSRM encoded polyline
+// Decode OSRM encoded polyline
 function decodePolyline(encoded) {
     const points = [];
     let index = 0, lat = 0, lng = 0;
-
     while (index < encoded.length) {
         let b, shift = 0, result = 0;
         do {
@@ -300,19 +385,14 @@ function decodePolyline(encoded) {
             result |= (b & 0x1f) << shift;
             shift += 5;
         } while (b >= 0x20);
-        const dlat = (result & 1) ? ~(result >> 1) : (result >> 1);
-        lat += dlat;
-
-        shift = 0;
-        result = 0;
+        lat += (result & 1) ? ~(result >> 1) : (result >> 1);
+        shift = 0; result = 0;
         do {
             b = encoded.charCodeAt(index++) - 63;
             result |= (b & 0x1f) << shift;
             shift += 5;
         } while (b >= 0x20);
-        const dlng = (result & 1) ? ~(result >> 1) : (result >> 1);
-        lng += dlng;
-
+        lng += (result & 1) ? ~(result >> 1) : (result >> 1);
         points.push([lat / 1e5, lng / 1e5]);
     }
     return points;
@@ -328,7 +408,7 @@ function hideError() {
     document.getElementById("error").classList.add("hidden");
 }
 
-// Allow Enter key to trigger calculation
+// Keyboard shortcuts
 document.getElementById("destination").addEventListener("keydown", e => {
     if (e.key === "Enter") compareRoutes();
 });
