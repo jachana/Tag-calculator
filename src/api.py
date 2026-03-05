@@ -7,12 +7,14 @@ from datetime import datetime
 from fastapi import APIRouter, HTTPException
 
 from src.models import (
+    CompareRoutesResponse,
     FuelEstimate,
+    RouteComparison,
     RouteInfo,
     TollEstimateRequest,
     TollEstimateResponse,
 )
-from src.route_service import geocode, get_route
+from src.route_service import geocode, get_route, get_routes
 from src.toll_calculator import calculate_toll
 from src.toll_engine import find_portals_crossed
 
@@ -45,9 +47,6 @@ async def estimate_toll(req: TollEstimateRequest):
     portals_crossed = find_portals_crossed(points)
     toll_estimate = calculate_toll(portals_crossed, departure, req.vehicle_category)
 
-    liters = distance_km * RAV4_L_PER_100KM / 100
-    fuel_cost = round(liters * GAS_PRICE_CLP_PER_LITER)
-
     return TollEstimateResponse(
         route=RouteInfo(
             distance_km=round(distance_km, 1),
@@ -55,14 +54,58 @@ async def estimate_toll(req: TollEstimateRequest):
             polyline=encoded_polyline,
         ),
         toll_estimate=toll_estimate,
-        fuel_estimate=FuelEstimate(
-            liters=round(liters, 2),
-            cost_clp=fuel_cost,
-            consumption_lper100km=RAV4_L_PER_100KM,
-            price_per_liter_clp=GAS_PRICE_CLP_PER_LITER,
-            vehicle_name="Toyota RAV4 2.0L",
-        ),
+        fuel_estimate=_build_fuel_estimate(distance_km),
     )
+
+
+def _build_fuel_estimate(distance_km: float) -> FuelEstimate:
+    liters = distance_km * RAV4_L_PER_100KM / 100
+    return FuelEstimate(
+        liters=round(liters, 2),
+        cost_clp=round(liters * GAS_PRICE_CLP_PER_LITER),
+        consumption_lper100km=RAV4_L_PER_100KM,
+        price_per_liter_clp=GAS_PRICE_CLP_PER_LITER,
+        vehicle_name="Toyota RAV4 2.0L",
+    )
+
+
+@router.post("/compare-routes", response_model=CompareRoutesResponse)
+async def compare_routes(req: TollEstimateRequest):
+    """Return multiple alternative routes with toll + fuel comparison."""
+    try:
+        origin = await geocode(req.origin)
+        destination = await geocode(req.destination)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    try:
+        alt_routes = await get_routes(origin, destination)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    departure = req.departure_time or datetime.now()
+    comparisons: list[RouteComparison] = []
+
+    for encoded_polyline, distance_km, duration_min, points in alt_routes:
+        portals_crossed = find_portals_crossed(points)
+        toll_estimate = calculate_toll(portals_crossed, departure, req.vehicle_category)
+        fuel = _build_fuel_estimate(distance_km)
+
+        comparisons.append(RouteComparison(
+            route=RouteInfo(
+                distance_km=round(distance_km, 1),
+                duration_min=round(duration_min, 1),
+                polyline=encoded_polyline,
+            ),
+            toll_estimate=toll_estimate,
+            fuel_estimate=fuel,
+            trip_total_clp=toll_estimate.total_clp + fuel.cost_clp,
+        ))
+
+    # Sort by total trip cost (cheapest first)
+    comparisons.sort(key=lambda c: c.trip_total_clp)
+
+    return CompareRoutesResponse(routes=comparisons)
 
 
 @router.get("/highways")

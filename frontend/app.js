@@ -1,6 +1,9 @@
-// Santiago TAG Calculator - Frontend
+// Santiago TAG Calculator - Frontend with Route Comparison
 
 const API_BASE = window.location.origin;
+
+const ROUTE_COLORS = ["#4361ee", "#e76f51", "#2d6a4f"];
+const ROUTE_LABELS = ["Ruta A", "Ruta B", "Ruta C"];
 
 // Initialize map centered on Santiago
 const map = L.map("map").setView([-33.45, -70.65], 12);
@@ -18,6 +21,10 @@ let markerLayer = L.layerGroup().addTo(map);
 let clickCount = 0;
 let originMarker = null;
 let destMarker = null;
+
+// Currently selected route index
+let selectedRouteIndex = 0;
+let currentData = null;
 
 // Set default departure time to now
 const departureInput = document.getElementById("departure");
@@ -53,20 +60,18 @@ async function loadPortals() {
 }
 loadPortals();
 
-// Map click handler - set origin/destination
+// Map click handler
 map.on("click", function (e) {
     clickCount++;
     const latlng = e.latlng;
     const coordStr = `${latlng.lat.toFixed(6)},${latlng.lng.toFixed(6)}`;
 
     if (clickCount % 2 === 1) {
-        // Set origin
         if (originMarker) markerLayer.removeLayer(originMarker);
         originMarker = L.marker(latlng, { title: "Origen" }).addTo(markerLayer);
         originMarker.bindPopup("Origen").openPopup();
         document.getElementById("origin").value = coordStr;
     } else {
-        // Set destination
         if (destMarker) markerLayer.removeLayer(destMarker);
         destMarker = L.marker(latlng, { title: "Destino" }).addTo(markerLayer);
         destMarker.bindPopup("Destino").openPopup();
@@ -83,7 +88,7 @@ function formatCLP(amount) {
 const bandNames = {
     tbfp: "Fuera de punta",
     tbp: "Punta",
-    ts: "Saturación",
+    ts: "Saturacion",
 };
 
 const bandClasses = {
@@ -92,8 +97,8 @@ const bandClasses = {
     ts: "band-ts",
 };
 
-// Main calculation
-async function calculateToll() {
+// Main comparison
+async function compareRoutes() {
     const origin = document.getElementById("origin").value.trim();
     const destination = document.getElementById("destination").value.trim();
     const departure = document.getElementById("departure").value;
@@ -106,7 +111,7 @@ async function calculateToll() {
 
     const btn = document.getElementById("calculate-btn");
     btn.disabled = true;
-    btn.textContent = "Calculando...";
+    btn.textContent = "Comparando...";
     hideError();
 
     try {
@@ -119,7 +124,7 @@ async function calculateToll() {
             body.departure_time = new Date(departure).toISOString();
         }
 
-        const resp = await fetch(`${API_BASE}/api/estimate-toll`, {
+        const resp = await fetch(`${API_BASE}/api/compare-routes`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),
@@ -131,47 +136,134 @@ async function calculateToll() {
         }
 
         const data = await resp.json();
-        displayResults(data);
+        currentData = data;
+        selectedRouteIndex = 0;
+        displayComparison(data);
     } catch (e) {
         showError(e.message);
     } finally {
         btn.disabled = false;
-        btn.textContent = "Calcular Peaje";
+        btn.textContent = "Comparar Rutas";
     }
 }
 
-function displayResults(data) {
+function displayComparison(data) {
     const results = document.getElementById("results");
     results.classList.remove("hidden");
 
-    // Route info
-    document.getElementById("total-amount").textContent = formatCLP(data.toll_estimate.total_clp);
-    document.getElementById("route-distance").textContent = `${data.route.distance_km} km`;
-    document.getElementById("route-duration").textContent = `${Math.round(data.route.duration_min)} min`;
+    const container = document.getElementById("routes-container");
 
-    // Fuel estimate
-    const fuelBox = document.getElementById("fuel-box");
-    if (data.fuel_estimate) {
-        fuelBox.classList.remove("hidden");
-        document.getElementById("fuel-amount").textContent = formatCLP(data.fuel_estimate.cost_clp);
-        document.getElementById("fuel-liters").textContent = `${data.fuel_estimate.liters} L`;
-        document.getElementById("trip-total").textContent = formatCLP(
-            data.toll_estimate.total_clp + data.fuel_estimate.cost_clp
-        );
+    if (data.routes.length === 0) {
+        container.innerHTML = '<div id="no-tolls"><p>No se encontraron rutas.</p></div>';
+        return;
     }
 
-    // Draw route on map
-    routeLayer.clearLayers();
-    const decoded = decodePolyline(data.route.polyline);
-    const routeLine = L.polyline(decoded, {
-        color: "#4361ee",
-        weight: 5,
-        opacity: 0.8,
-    }).addTo(routeLayer);
-    map.fitBounds(routeLine.getBounds().pad(0.1));
+    const cheapest = data.routes[0].trip_total_clp;
 
-    // Highlight crossed portals
-    const crossedIds = new Set(data.toll_estimate.portals_crossed.map(p => p.portal_id));
+    container.innerHTML = data.routes.map((r, i) => {
+        const savings = r.trip_total_clp - cheapest;
+        const savingsTag = i > 0 && savings > 0
+            ? `<span class="savings-tag">+${formatCLP(savings)}</span>`
+            : "";
+        const cheapestTag = i === 0 && data.routes.length > 1
+            ? '<span class="cheapest-tag">Mas barata</span>'
+            : "";
+
+        const portalRows = r.toll_estimate.portals_crossed.length > 0
+            ? r.toll_estimate.portals_crossed.map(p => `
+                <tr>
+                    <td>${p.highway}</td>
+                    <td>${p.portal_name}</td>
+                    <td class="${bandClasses[p.time_band]}">${bandNames[p.time_band]}</td>
+                    <td>${formatCLP(p.fee_clp)}</td>
+                </tr>
+            `).join("")
+            : '<tr><td colspan="4" class="no-portals">Sin peajes en esta ruta</td></tr>';
+
+        return `
+        <div class="route-card ${i === selectedRouteIndex ? 'selected' : ''}"
+             data-index="${i}"
+             onclick="selectRoute(${i})"
+             style="--route-color: ${ROUTE_COLORS[i]}">
+            <div class="route-header">
+                <div class="route-label">
+                    <span class="route-dot" style="background: ${ROUTE_COLORS[i]}"></span>
+                    ${ROUTE_LABELS[i]}
+                    ${cheapestTag}${savingsTag}
+                </div>
+                <div class="route-total">${formatCLP(r.trip_total_clp)}</div>
+            </div>
+            <div class="route-meta">
+                <span>${r.route.distance_km} km</span>
+                <span>${Math.round(r.route.duration_min)} min</span>
+                <span>TAG ${formatCLP(r.toll_estimate.total_clp)}</span>
+                <span>Bencina ${formatCLP(r.fuel_estimate.cost_clp)} (${r.fuel_estimate.liters} L)</span>
+            </div>
+            <div class="route-portals ${i === selectedRouteIndex ? '' : 'hidden'}">
+                <table class="breakdown-table">
+                    <thead>
+                        <tr>
+                            <th>Autopista</th>
+                            <th>Portico</th>
+                            <th>Horario</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>${portalRows}</tbody>
+                </table>
+            </div>
+        </div>
+        `;
+    }).join("");
+
+    drawAllRoutes(data);
+}
+
+function selectRoute(index) {
+    selectedRouteIndex = index;
+
+    // Update card selection
+    document.querySelectorAll(".route-card").forEach((card, i) => {
+        card.classList.toggle("selected", i === index);
+        card.querySelector(".route-portals").classList.toggle("hidden", i !== index);
+    });
+
+    // Update map emphasis
+    drawAllRoutes(currentData);
+}
+
+function drawAllRoutes(data) {
+    routeLayer.clearLayers();
+    markerLayer.clearLayers();
+
+    // Draw non-selected routes first (behind), then selected on top
+    const order = data.routes.map((_, i) => i).sort((a, b) => {
+        if (a === selectedRouteIndex) return 1;
+        if (b === selectedRouteIndex) return -1;
+        return a - b;
+    });
+
+    let fitBounds = null;
+
+    order.forEach(i => {
+        const r = data.routes[i];
+        const decoded = decodePolyline(r.route.polyline);
+        const isSelected = i === selectedRouteIndex;
+
+        const line = L.polyline(decoded, {
+            color: ROUTE_COLORS[i],
+            weight: isSelected ? 6 : 3,
+            opacity: isSelected ? 0.9 : 0.4,
+        }).addTo(routeLayer);
+
+        if (isSelected) {
+            fitBounds = line.getBounds();
+        }
+    });
+
+    // Highlight crossed portals for selected route
+    const selected = data.routes[selectedRouteIndex];
+    const crossedIds = new Set(selected.toll_estimate.portals_crossed.map(p => p.portal_id));
     portalLayer.eachLayer(marker => {
         if (crossedIds.has(marker.portalId)) {
             marker.setStyle({ fillColor: "#e63946", radius: 8, fillOpacity: 1 });
@@ -180,37 +272,19 @@ function displayResults(data) {
         }
     });
 
-    // Breakdown table
-    const tbody = document.getElementById("breakdown-body");
-    const noTolls = document.getElementById("no-tolls");
-    const breakdown = document.getElementById("breakdown");
-
-    if (data.toll_estimate.portals_crossed.length === 0) {
-        breakdown.classList.add("hidden");
-        noTolls.classList.remove("hidden");
-    } else {
-        noTolls.classList.add("hidden");
-        breakdown.classList.remove("hidden");
-
-        tbody.innerHTML = data.toll_estimate.portals_crossed
-            .map(p => `
-                <tr>
-                    <td>${p.highway}</td>
-                    <td>${p.portal_name}</td>
-                    <td class="${bandClasses[p.time_band]}">${bandNames[p.time_band]}</td>
-                    <td>${formatCLP(p.fee_clp)}</td>
-                </tr>
-            `)
-            .join("");
+    // Origin/destination markers
+    if (data.routes.length > 0) {
+        const first = decodePolyline(data.routes[0].route.polyline);
+        if (first.length > 0) {
+            const startIcon = L.divIcon({ html: "A", className: "pin-marker pin-start", iconSize: [24, 24] });
+            const endIcon = L.divIcon({ html: "B", className: "pin-marker pin-end", iconSize: [24, 24] });
+            L.marker(first[0], { icon: startIcon, title: "Origen" }).addTo(markerLayer);
+            L.marker(first[first.length - 1], { icon: endIcon, title: "Destino" }).addTo(markerLayer);
+        }
     }
 
-    // Add origin/destination markers if not already placed
-    if (decoded.length > 0) {
-        markerLayer.clearLayers();
-        const startIcon = L.divIcon({ html: "🟢", className: "emoji-marker", iconSize: [20, 20] });
-        const endIcon = L.divIcon({ html: "🔴", className: "emoji-marker", iconSize: [20, 20] });
-        L.marker(decoded[0], { icon: startIcon, title: "Origen" }).addTo(markerLayer);
-        L.marker(decoded[decoded.length - 1], { icon: endIcon, title: "Destino" }).addTo(markerLayer);
+    if (fitBounds) {
+        map.fitBounds(fitBounds.pad(0.1));
     }
 }
 
@@ -256,7 +330,7 @@ function hideError() {
 
 // Allow Enter key to trigger calculation
 document.getElementById("destination").addEventListener("keydown", e => {
-    if (e.key === "Enter") calculateToll();
+    if (e.key === "Enter") compareRoutes();
 });
 document.getElementById("origin").addEventListener("keydown", e => {
     if (e.key === "Enter") document.getElementById("destination").focus();

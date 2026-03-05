@@ -76,3 +76,39 @@ async def get_route(
     points = polyline_codec.decode(encoded)  # returns [(lat, lng), ...]
 
     return encoded, distance_km, duration_min, points
+
+
+def _parse_osrm_route(route: dict) -> tuple[str, float, float, list[tuple[float, float]]]:
+    """Parse a single OSRM route object into our standard tuple."""
+    encoded = route["geometry"]
+    distance_km = route["distance"] / 1000.0
+    duration_min = route["duration"] / 60.0
+    points = polyline_codec.decode(encoded)
+    return encoded, distance_km, duration_min, points
+
+
+async def get_routes(
+    origin: LatLng, destination: LatLng, max_alternatives: int = 3
+) -> list[tuple[str, float, float, list[tuple[float, float]]]]:
+    """Get multiple alternative routes from OSRM.
+
+    Returns a list of (encoded_polyline, distance_km, duration_min, decoded_points).
+    """
+    coords = f"{origin.lng},{origin.lat};{destination.lng},{destination.lat}"
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(
+            f"{OSRM_BASE_URL}/route/v1/driving/{coords}",
+            params={
+                "overview": "full",
+                "geometries": "polyline",
+                "alternatives": "true",
+            },
+            timeout=15,
+        )
+        resp.raise_for_status()
+        data = resp.json()
+
+    if data.get("code") != "Ok" or not data.get("routes"):
+        raise ValueError("OSRM could not find a route")
+
+    return [_parse_osrm_route(r) for r in data["routes"][:max_alternatives]]

@@ -64,3 +64,14 @@ class TollEstimate(BaseModel):
     total_clp: int
     currency: str = "CLP"
     portals_crossed: list[PortalCrossing]
+
+
+class RouteComparison(BaseModel):
+    route: RouteInfo
+    toll_estimate: TollEstimate
+    fuel_estimate: FuelEstimate
+    trip_total_clp: int
+
+
+class CompareRoutesResponse(BaseModel):
+    routes: list[RouteComparison]
