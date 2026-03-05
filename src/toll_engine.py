@@ -39,6 +39,44 @@ def _load_all_highways() -> list[dict]:
     return highways
 
 
+def _interpolate_segment(
+    lat1: float, lng1: float, lat2: float, lng2: float, max_gap_m: float = 100
+) -> list[tuple[float, float]]:
+    """Interpolate extra points along a segment so no gap exceeds max_gap_m.
+
+    Returns a list of (lat, lng) including the start but NOT the end point
+    (to avoid duplicates when chaining segments).
+    """
+    dist = _haversine_m(lat1, lng1, lat2, lng2)
+    if dist <= max_gap_m:
+        return [(lat1, lng1)]
+
+    n_steps = max(2, int(math.ceil(dist / max_gap_m)))
+    points = []
+    for s in range(n_steps):
+        frac = s / n_steps
+        lat = lat1 + frac * (lat2 - lat1)
+        lng = lng1 + frac * (lng2 - lng1)
+        points.append((lat, lng))
+    return points
+
+
+def _densify_route(
+    route_points: list[tuple[float, float]], max_gap_m: float = 100
+) -> list[tuple[float, float]]:
+    """Add interpolated points so no consecutive pair is more than max_gap_m apart."""
+    if len(route_points) < 2:
+        return list(route_points)
+
+    dense: list[tuple[float, float]] = []
+    for i in range(len(route_points) - 1):
+        lat1, lng1 = route_points[i]
+        lat2, lng2 = route_points[i + 1]
+        dense.extend(_interpolate_segment(lat1, lng1, lat2, lng2, max_gap_m))
+    dense.append(route_points[-1])
+    return dense
+
+
 def find_portals_crossed(
     route_points: list[tuple[float, float]],
     radius_m: float = PORTAL_DETECTION_RADIUS_M,
@@ -46,7 +84,7 @@ def find_portals_crossed(
     """Walk the route polyline and detect portal crossings.
 
     Returns a list of dicts:
-      {highway, portal_id, portal_name, lat, lng, direction, rates}
+      {highway, portal_id, portal_name, lat, lng, rates}
     in the order they are crossed.
     """
     highways = _load_all_highways()
@@ -66,18 +104,17 @@ def find_portals_crossed(
                 "lat": portal["lat"],
                 "lng": portal["lng"],
                 "rates": portal["rates"],
-                "direction_bearing": portal.get("direction_bearing"),
             })
+
+    # Densify the route so we don't skip portals between sparse OSRM points
+    dense_points = _densify_route(route_points, max_gap_m=80)
 
     crossed = []
     crossed_ids = set()  # avoid double-counting same portal
 
-    for i in range(len(route_points) - 1):
-        lat1, lng1 = route_points[i]
-        lat2, lng2 = route_points[i + 1]
-
-        # Calculate travel bearing for this segment
-        seg_bearing = _bearing(lat1, lng1, lat2, lng2)
+    for i in range(len(dense_points) - 1):
+        lat1, lng1 = dense_points[i]
+        lat2, lng2 = dense_points[i + 1]
 
         for portal in all_portals:
             if portal["portal_id"] in crossed_ids:
@@ -88,14 +125,6 @@ def find_portals_crossed(
             d2 = _haversine_m(lat2, lng2, portal["lat"], portal["lng"])
 
             if min(d1, d2) <= radius_m:
-                # If portal has a direction constraint, check bearing match
-                if portal["direction_bearing"] is not None:
-                    bearing_diff = abs(seg_bearing - portal["direction_bearing"])
-                    if bearing_diff > 180:
-                        bearing_diff = 360 - bearing_diff
-                    if bearing_diff > 90:
-                        continue  # Wrong direction, skip
-
                 crossed_ids.add(portal["portal_id"])
                 crossed.append({
                     "highway": portal["highway"],
